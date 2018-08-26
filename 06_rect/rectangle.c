@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 //I've provided "min" and "max" functions in
 //case they are useful to you
 int min (int a, int b) {
@@ -8,6 +9,7 @@ int min (int a, int b) {
   }
   return b;
 }
+
 int max (int a, int b) {
   if (a > b) {
     return a;
@@ -16,14 +18,60 @@ int max (int a, int b) {
 }
 
 //Declare your rectangle structure here!
-
+struct rectTag {
+  int x;
+  int y;
+  int width;
+  int height;
+};
+typedef struct rectTag rectangle;
 
 rectangle canonicalize(rectangle r) {
   //WRITE THIS FUNCTION
+  //Check for negative width and make it positive if necessary
+  if (r.width < 0) {
+    r.width = r.width * -1;
+    r.x = r.x - r.width;
+      };
+
+  //Check for negative height and make it positive if necessary
+  if (r.height < 0) {
+    r.height = r.height*-1;
+    r.y = r.y - r.height;
+      };
+  
   return r;
 }
+
 rectangle intersection(rectangle r1, rectangle r2) {
   //WRITE THIS FUNCTION
+  //Canonicalize both input rectangles
+  r1 = canonicalize(r1);
+  r2 = canonicalize(r2);
+
+  //Find the x and width elements of the intersection
+  int xmin = min(r1.x,r2.x);
+  int xmax = max(r1.x,r2.x);
+  int xbound = min((r1.x + r1.width),(r2.x + r2.width));
+  int xdiff = xmax - xmin;
+  r1.width = xbound - xmin - xdiff;
+  r1.x = xmax;
+
+  //Find the y and height components of the intersection
+  int ymin = min(r1.y,r2.y);
+  int ymax = max(r1.y,r2.y);
+  int ybound = min((r1.y + r1.height),(r2.y + r2.height));
+  int ydiff = ymax - ymin;
+  r1.height = ybound - ymin - ydiff;
+  r1.y = ymax;
+
+  //Map negative width and height to 0 so printRectangle
+  //prints the right thing
+  if ((r1.width < 0)||(r1.height < 0)) {
+    r1.width = 0;
+    r1.height = 0;
+  }
+
   return r1;
 }
 
