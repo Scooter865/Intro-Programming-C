@@ -15,7 +15,7 @@ double balanceCalc(retire_info status, double startBal) {
   return bal;
 }
 
-void retirement(int startAge, double intial, retire_info working, retire_info retired) {
+void retirement (int startAge, double intial,  retire_info working,  retire_info retired) {
   double balance = intial;
   int ageYear = startAge / 12;
   int ageMonth = startAge % 12;
