@@ -1,12 +1,12 @@
 #include "stdlib.h"
 #include "stdio.h"
 
-struct _retirement_info {
+struct _retire_info {
   int months; //months spent working or retired
   double contribution; //dollars contributed
   double rate_of_return; //yeah
 };
-typedef struct _retirement_info retire_info;
+typedef struct _retire_info retire_info;
 
 double balanceCalc(retire_info status, double startBal) {
   double bal = startBal;
