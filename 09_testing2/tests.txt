@@ -1,0 +1,27 @@
+aaaaa bbbbb
+aaaab bbbcc
+aaabb ccccd
+a a
+aa a
+a aa
+aaaaaa aaaaaa
+aaaaaa bbbbcc
+aaabbb cccccc
+
+aaaaa
+a
+aaaaaa
+aaaaab aaaaa
++++a1 +-a1b
++-a1b +-a1b
+aaaab 11122
+aaabb 11112
+++++- 11122
+a1b2a a1b2c
+a1b2c a1b2c
+aaaaa aaaaa aaaaa
+aaaaa aaaa
+aaaa aaaaa
+aaaaaa aaaaa
+aaaaa aaaaaa
+abbbb abbbb
