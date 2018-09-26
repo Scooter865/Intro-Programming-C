@@ -4,6 +4,7 @@
 #define VALUE_KING 13
 #define VALUE_QUEEN 12
 #define VALUE_JACK 11
+
 typedef enum {
   SPADES,
   HEARTS,
@@ -17,6 +18,7 @@ struct card_tag {
   suit_t suit;
 };
 typedef struct card_tag card_t;
+
 typedef enum {
   STRAIGHT_FLUSH,
   FOUR_OF_A_KIND,
@@ -28,6 +30,7 @@ typedef enum {
   PAIR,
   NOTHING
 } hand_ranking_t;
+
 card_t card_from_num(unsigned c);
 void assert_card_valid(card_t c);
 const char * ranking_to_string(hand_ranking_t r) ;
