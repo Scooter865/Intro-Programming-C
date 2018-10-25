@@ -1,15 +1,8 @@
-Grading at Thu Oct 25 01:21:04 UTC 2018
+Grading at Thu Oct 25 01:24:26 UTC 2018
 Attempting to compile test.c
 gcc -o test -std=gnu99 -Wall -Werror -pedantic -fsanitize=address test.c
 compiled
-I expected to find a file called 'answer.txt' but it did not exist
-(or was not a regular file)
-Here are the files that I can find:
-Makefile
-README
-test
-test.c
-test.txt
-Your output did not match what we expected.
+Your file matched the expected output
+Your output matched what we expected
 
-Overall Grade: FAILED
+Overall Grade: PASSED
