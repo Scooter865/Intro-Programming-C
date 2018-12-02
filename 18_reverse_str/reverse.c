@@ -3,7 +3,21 @@
 #include <string.h>
 
 void reverse(char * str) {
-  //WRITE ME!
+  //Determine the length of the string
+  size_t length = strlen(str);
+  
+  //fill a temporary string
+  char tempstr[length];
+  char * val;
+  for (size_t i = 0; i < length; i++) {
+    val = str + length - 1 - i;
+    tempstr[i] = *val;
+  }
+
+  //write tempstr back to str
+  for (size_t i = 0; i < length; i++) {
+    str[i] = tempstr[i];
+  }
 }
 
 int main(void) {
