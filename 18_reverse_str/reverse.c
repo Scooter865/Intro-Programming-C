@@ -3,6 +3,11 @@
 #include <string.h>
 
 void reverse(char * str) {
+  //account for NULL
+  if (str == NULL) {
+      return;
+    }
+  
   //Determine the length of the string
   size_t length = strlen(str);
   
