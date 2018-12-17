@@ -1,0 +1,119 @@
+Grading at Mon Dec 17 00:44:29 UTC 2018
+**Testing broken implementation 10 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 2, ans is 2
+power returned 2, ans is 4
+Encountered wrong answer
+
+**Testing broken implementation 11 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 2, ans is 2
+power returned 4, ans is 4
+power returned 8, ans is 8
+power returned 216, ans is -8
+Encountered wrong answer
+
+**Testing broken implementation 1 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 2
+Encountered wrong answer
+
+**Testing broken implementation 2 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 0, ans is 1
+Encountered wrong answer
+
+**Testing broken implementation 3 **
+-------------------------------------
+
+power returned 0, ans is 1
+Encountered wrong answer
+
+**Testing broken implementation 4 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 2, ans is 2
+power returned 4, ans is 4
+power returned 8, ans is 8
+power returned 65528, ans is -8
+Encountered wrong answer
+
+**Testing broken implementation 5 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 2, ans is 2
+power returned 2, ans is 4
+Encountered wrong answer
+
+**Testing broken implementation 6 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 2, ans is 1
+Encountered wrong answer
+
+**Testing broken implementation 7 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 3, ans is 1
+Encountered wrong answer
+
+**Testing broken implementation 8 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 2, ans is 2
+power returned 4, ans is 4
+power returned 6, ans is 8
+Encountered wrong answer
+
+**Testing broken implementation 9 **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 0, ans is 1
+Encountered wrong answer
+
+**Testing correct implementation **
+-------------------------------------
+
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 1, ans is 1
+power returned 2, ans is 2
+power returned 4, ans is 4
+power returned 8, ans is 8
+power returned -8, ans is -8
+power returned 16, ans is 16
+power returned 0, ans is 0
+power returned 0, ans is 0
+correct implementation!
+
+All tests were ok.
+
+
+Overall Grade: PASSED
