@@ -216,7 +216,14 @@ hand_eval_t build_hand_from_match(deck_t * hand, unsigned n, hand_ranking_t what
 }
 
 
+/*Sort the hands with qsort and card_ptr_comp, then call evaluate_hand for each hand,
+then pick a winner based on hand rank or tiebreaker cards*/
 int compare_hands(deck_t * hand1, deck_t * hand2) {
+  //sort and evaluate hands
+  qsort(hand1, hand1->n_cards, sizeof(card_t), card_ptr_comp);
+  qsort(hand2, hand2->n_cards, sizeof(card_t), card_ptr_comp);
+  hand_eval_t hand1rank = evaluate_hand(hand1);
+  hand_eval_t hand1rank = evaluate_hand(hand1);
 
   return 0;
 }
