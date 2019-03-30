@@ -217,15 +217,35 @@ hand_eval_t build_hand_from_match(deck_t * hand, unsigned n, hand_ranking_t what
 
 
 /*Sort the hands with qsort and card_ptr_comp, then call evaluate_hand for each hand,
-then pick a winner based on hand rank or tiebreaker cards*/
+then pick a winner based on hand rank or tiebreaker cards.
+Return a positive number if hand 1 is better, 0 if the hands tie, and a negative number
+if hand 2 is better*/
 int compare_hands(deck_t * hand1, deck_t * hand2) {
   //sort and evaluate hands
   qsort(hand1, hand1->n_cards, sizeof(card_t), card_ptr_comp);
   qsort(hand2, hand2->n_cards, sizeof(card_t), card_ptr_comp);
-  hand_eval_t hand1rank = evaluate_hand(hand1);
-  hand_eval_t hand1rank = evaluate_hand(hand1);
+  hand_eval_t hand1ranked = evaluate_hand(hand1);
+  hand_eval_t hand2ranked = evaluate_hand(hand2);
 
-  return 0;
+  //need to subtract 1 from 2 because 'better' value is lower in enum
+  int handRankDiff = hand2ranked.ranking - hand1ranked.ranking;
+
+  if (handRankDiff != 0) {
+    return handRankDiff; //winner picked from hand rankings
+  }
+  else if {
+    //winner picked from tiebreaker card
+    int cardDiff;
+    for (size_t i = 0; i < 5; i++) {
+      cardDiff = (*hand1ranked.cards[i]).value - (*hand2ranked.cards[i]).value;
+      if (cadDiff != 0) {
+        return cardDiff;
+      }
+    }
+  }
+  else {
+    return 0; //tie
+  }
 }
 
 
