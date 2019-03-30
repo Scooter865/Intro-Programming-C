@@ -3,38 +3,215 @@
 #include <stdlib.h>
 #include <assert.h>
 
+
+/*Comparison function for qsort to use when sorting a hand HIGHEST TO LOWEST
+Note qsort's "normal" behavior is to sort lowest to highest*/
 int card_ptr_comp(const void * vp1, const void * vp2) {
+  //define cards cp1 and cp2 to work with - pointer to a constant pointer to a constant card_t
+  const card_t * cp1 = vp1;
+  const card_t * cp2 = vp2;
+
+  //calculate the differences in the card values and the suit values
+  //2nd minus 1st card to order them from highest to lowest
+  //1st minus 2nd here because suit_t already has the suit values in backwards order
+  int valDiff = cp2->value - cp1->value;
+  int suitDiff = cp1->suit - cp2->suit;
+  
+  //Check the suit if the values are the same
+  if ((valDiff == 0)&&(suitDiff == 0)) {
+    return 0;
+  }
+  else if ((valDiff == 0)&&(suitDiff != 0)) {
+    return suitDiff;
+  }
+  else {
+    return valDiff;
+  }
+}
+
+
+/*Function that determines if there is a flush.
+Return the suit if yes, return NUM_Suits if no*/
+suit_t flush_suit(deck_t * hand) {
+  suit_t curSuit;
+  int spadesCnt = 0, heartsCnt = 0, diamondsCnt = 0, clubsCnt = 0;
+  //Increment the appropriate suit counter for each card
+  for (size_t i = 0; i < hand->n_cards; i++) {
+    curSuit = (*hand->cards[i]).suit;
+    switch (curSuit) {
+    case SPADES:
+      spadesCnt++;
+      break;
+    case HEARTS:
+      heartsCnt++;
+      break;
+    case DIAMONDS:
+      diamondsCnt++;
+      break;
+    case CLUBS:
+      clubsCnt++;
+    default:
+      printf("Found an invalid suit when searching for a flush\n");
+    }
+  }
+  //Return the flush suit if there is a flush
+  if (spadesCnt >= 5) {
+    return SPADES;
+  }
+  else if (heartsCnt >= 5) {
+    return HEARTS;
+  }
+  else if (diamondsCnt >= 5) {
+    return DIAMONDS;
+  }
+  else if (clubsCnt >= 5) {
+    return CLUBS;
+  }
+  else {
+    return NUM_SUITS;
+  }
+}
+
+
+/*This function returns the largest element in an array of unsigned integers*/
+unsigned get_largest_element(unsigned * arr, size_t n) {
+  unsigned largest = arr[0];
+  for (size_t i = 1; i < n; i++) {
+    if (arr[i] > largest) {
+      largest = arr[i];
+    }
+  }
+ return largest;
+}
+
+
+/*Return the LOWEST index in the array (match_counts) whose value is n_of_akind*/
+size_t get_match_index(unsigned * match_counts, size_t n,unsigned n_of_akind){
+  for (size_t i = 0; i < n; i++) {
+    if (match_counts[i] == n_of_akind) {
+      return i;
+    }
+  }
+  printf("n_of_akind not fouund in array match_counts\n");
   return 0;
 }
 
-suit_t flush_suit(deck_t * hand) {
- return NUM_SUITS;
-}
 
-unsigned get_largest_element(unsigned * arr, size_t n) {
- return 0;
-}
-
-size_t get_match_index(unsigned * match_counts, size_t n,unsigned n_of_akind){
-
- return 0;
-}
-ssize_t  find_secondary_pair(deck_t * hand,
-			     unsigned * match_counts,
-			     size_t match_idx) {
+/*Return the index of the next best 2+ of a kind in a hand (hand is sorted so lower 
+index corresponds to higher value).  match_idx is index of best 2+.*/
+ssize_t  find_secondary_pair(deck_t * hand, unsigned * match_counts, size_t match_idx) {
+  //Start looking 1 after index of the best 2+
+  for (size_t i = match_idx + 1; i < hand->n_cards; i++) {
+    //Don't return if the value at the index is the same as the best 2+ value
+    if ((*hand->cards[i]).value == (*hand->cards[match_idx]).value) {
+      continue;
+    }
+    //Return when the next 2+ is found. (this will be the next best in a sorted hand)
+    else if (match_counts[i] > 1) {
+      return i;
+    }
+  }
+  //Retrun -1 if there is no other 2+
   return -1;
 }
 
+
+/* This function should determine if there is a straight starting at index in hand.
+Find any straight if fs is NUM_SUITS. Find a straight flush in the specified suit if fs is something else.
+Return -1 if an Ace-low straight was found at index, 0 if no straight was found at index, 
+1 if any other straight was found at index*/
 int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
+  unsigned valDiff;
+  size_t counter = 1; //start counter at 1 b/c there is always a 1-card straight
+  int straightFlush = 1; //start true b/c there's always a 1 card flush
+  card_t ace = {.value = VALUE_ACE, .suit = fs};
+  card_t two = {.value = 2, .suit = fs};
+  card_t thatcard;
+  
+  for (size_t i = index; i < hand->n_cards; i++) {
+    if (counter == 5) {
+      if (fs == NUM_SUITS) {
+	printf("it's a straight!\n");
+	return 1;
+      }
+      else if (straightFlush) {
+	printf("it's a straight-flush\n");
+	return 1;
+      }
+      else {
+	printf("it's a straight but you needed a straight-flush\n");
+	return 0;
+      }
+    }
+
+    //Check for Ace low straight
+    if ((counter == 4)&&((*hand->cards[i]).value == 2)) {
+      //use deck_contains to find the right 2 and A
+      if ((fs == NUM_SUITS)&&((*hand->cards[0]).value == VALUE_ACE)) {
+	printf("Ace low straight\n");
+	return -1;
+      }
+      else if (straightFlush && deck_contains(hand,ace) && deck_contains(hand,two)) {
+	printf("Ace low straight-flush\n");
+	return -1;
+      }
+      else {
+	printf("no (Ace low) straight\n");
+	return 0;
+      }
+    }
+
+    //Begin normal straight counting logic
+    valDiff = (*hand->cards[i]).value - (*hand->cards[i+1]).value;
+    if (valDiff == 1) {
+      //counting up potential straight
+      counter++;
+      thatcard.value = (*hand->cards[i]).value;
+      thatcard.suit = fs;
+      if (!deck_contains(hand,thatcard)) {
+	straightFlush = 0;
+      }
+    }
+    else if (valDiff == 0) {
+      //encountered same value, skip to next card
+      continue;
+    }
+    else {
+      printf("no straight\n");
+      return 0;
+    }
+  }
+  
+  printf("something's wrong with is_straight_at\n");
   return 0;
 }
 
-hand_eval_t build_hand_from_match(deck_t * hand,
-				  unsigned n,
-				  hand_ranking_t what,
-				  size_t idx) {
 
+hand_eval_t build_hand_from_match(deck_t * hand, unsigned n, hand_ranking_t what, size_t idx) {
   hand_eval_t ans;
+  unsigned cardCount = n;
+  //pass ranking to ans
+  ans.ranking = what;
+  //set the first n elements of ans equal to the pointers of the matched cards in hand
+  for (size_t i = 0; i < n; i++) {
+    ans.cards[i] = hand->cards[idx+i];
+  }
+  
+  //Take as many cards as possible from before the matching ones but no more than 5-n
+  for (size_t i = 0; i < idx; i++) {
+    if (cardCount >= 5) {
+      break;
+    }
+    ans.cards[n+i] = hand->cards[i];
+    cardCount++;
+  }
+
+  //Take as many cards from after the matching ones as necessary to get to 5
+  for (size_t i = 0; cardCount < 5; i++) {
+    ans.cards[cardCount] = hand->cards[idx+n];
+    cardCount++;
+  }
+
   return ans;
 }
 
