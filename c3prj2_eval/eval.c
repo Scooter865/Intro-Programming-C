@@ -128,16 +128,16 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   for (size_t i = index; i < hand->n_cards; i++) {
     if (counter == 5) {
       if (fs == NUM_SUITS) {
-	//printf("it's a straight!\n");
-	return 1;
+	      //printf("it's a straight!\n");
+	      return 1;
       }
       else if (straightFlush) {
-	//printf("it's a straight-flush\n");
-	return 1;
+	      //printf("it's a straight-flush\n");
+	      return 1;
       }
-      else {
-	//printf("it's a straight but you needed a straight-flush\n");
-	return 0;
+        else {
+	      //printf("it's a straight but you needed a straight-flush\n");
+	      return 0;
       }
     }
 
@@ -145,16 +145,16 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
     if ((counter == 4)&&((*hand->cards[i]).value == 2)) {
       //use deck_contains to find the right 2 and A
       if ((fs == NUM_SUITS)&&((*hand->cards[0]).value == VALUE_ACE)) {
-	//printf("Ace low straight\n");
-	return -1;
+	      //printf("Ace low straight\n");
+	      return -1;
       }
       else if (straightFlush && deck_contains(hand,ace) && deck_contains(hand,two)) {
-	//printf("Ace low straight-flush\n");
-	return -1;
+	      //printf("Ace low straight-flush\n");
+	      return -1;
       }
       else {
-	//printf("no (Ace low) straight\n");
-	return 0;
+	      //printf("no (Ace low) straight\n");
+	      return 0;
       }
     }
 
@@ -166,7 +166,7 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
       thatcard.value = (*hand->cards[i]).value;
       thatcard.suit = fs;
       if (!deck_contains(hand,thatcard)) {
-	straightFlush = 0;
+	      straightFlush = 0;
       }
     }
     else if (valDiff == 0) {
