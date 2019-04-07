@@ -39,19 +39,16 @@ suit_t flush_suit(deck_t * hand) {
   for (size_t i = 0; i < hand->n_cards; i++) {
     curSuit = (*hand->cards[i]).suit;
     switch (curSuit) {
-    case SPADES:
-      spadesCnt++;
+    case SPADES: spadesCnt++;
       break;
-    case HEARTS:
-      heartsCnt++;
+    case HEARTS: heartsCnt++;
       break;
-    case DIAMONDS:
-      diamondsCnt++;
+    case DIAMONDS: diamondsCnt++;
       break;
-    case CLUBS:
-      clubsCnt++;
-    default:
-      printf("Found an invalid suit when searching for a flush\n");
+    case CLUBS: clubsCnt++;
+      break;
+    default: printf("Found an invalid suit when searching for a flush\n");
+      break;
     }
   }
   //Return the flush suit if there is a flush
@@ -131,15 +128,15 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   for (size_t i = index; i < hand->n_cards; i++) {
     if (counter == 5) {
       if (fs == NUM_SUITS) {
-	printf("it's a straight!\n");
+	//printf("it's a straight!\n");
 	return 1;
       }
       else if (straightFlush) {
-	printf("it's a straight-flush\n");
+	//printf("it's a straight-flush\n");
 	return 1;
       }
       else {
-	printf("it's a straight but you needed a straight-flush\n");
+	//printf("it's a straight but you needed a straight-flush\n");
 	return 0;
       }
     }
@@ -148,15 +145,15 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
     if ((counter == 4)&&((*hand->cards[i]).value == 2)) {
       //use deck_contains to find the right 2 and A
       if ((fs == NUM_SUITS)&&((*hand->cards[0]).value == VALUE_ACE)) {
-	printf("Ace low straight\n");
+	//printf("Ace low straight\n");
 	return -1;
       }
       else if (straightFlush && deck_contains(hand,ace) && deck_contains(hand,two)) {
-	printf("Ace low straight-flush\n");
+	//printf("Ace low straight-flush\n");
 	return -1;
       }
       else {
-	printf("no (Ace low) straight\n");
+	//printf("no (Ace low) straight\n");
 	return 0;
       }
     }
@@ -177,7 +174,7 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
       continue;
     }
     else {
-      printf("no straight\n");
+      //printf("no straight\n");
       return 0;
     }
   }
@@ -222,18 +219,18 @@ Return a positive number if hand 1 is better, 0 if the hands tie, and a negative
 if hand 2 is better*/
 int compare_hands(deck_t * hand1, deck_t * hand2) {
   //sort and evaluate hands
-  printf("unsorted hands\n");
+  /*printf("unsorted hands\n");
   print_hand(hand1);
   printf("\n");
   print_hand(hand2);
-  printf("\n");  
+  printf("\n");*/  
   qsort(hand1->cards, hand1->n_cards, sizeof(const card_t *), card_ptr_comp);
   qsort(hand2->cards, hand2->n_cards, sizeof(const card_t *), card_ptr_comp);
-  printf("sorted hands\n");
+  /*printf("sorted hands\n");
   print_hand(hand1);
   printf("\n");
   print_hand(hand2);
-  printf("\n");
+  printf("\n");*/
   hand_eval_t hand1ranked = evaluate_hand(hand1);
   hand_eval_t hand2ranked = evaluate_hand(hand2);
 
