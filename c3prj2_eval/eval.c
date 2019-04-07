@@ -222,8 +222,12 @@ Return a positive number if hand 1 is better, 0 if the hands tie, and a negative
 if hand 2 is better*/
 int compare_hands(deck_t * hand1, deck_t * hand2) {
   //sort and evaluate hands
-  qsort(hand1, hand1->n_cards, sizeof(card_t), card_ptr_comp);
-  qsort(hand2, hand2->n_cards, sizeof(card_t), card_ptr_comp);
+  qsort(hand1->cards, hand1->n_cards, sizeof(card_t), card_ptr_comp);
+  qsort(hand2->cards, hand2->n_cards, sizeof(card_t), card_ptr_comp);
+  print_hand(hand1);
+  printf("\n");
+  print_hand(hand2);
+  printf("\n");
   hand_eval_t hand1ranked = evaluate_hand(hand1);
   hand_eval_t hand2ranked = evaluate_hand(hand2);
 
@@ -233,17 +237,15 @@ int compare_hands(deck_t * hand1, deck_t * hand2) {
   if (handRankDiff != 0) {
     return handRankDiff; //winner picked from hand rankings
   }
-  else if {
+  else {
     //winner picked from tiebreaker card
     int cardDiff;
     for (size_t i = 0; i < 5; i++) {
       cardDiff = (*hand1ranked.cards[i]).value - (*hand2ranked.cards[i]).value;
-      if (cadDiff != 0) {
+      if (cardDiff != 0) {
         return cardDiff;
       }
     }
-  }
-  else {
     return 0; //tie
   }
 }
