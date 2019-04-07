@@ -94,16 +94,16 @@ size_t get_match_index(unsigned * match_counts, size_t n,unsigned n_of_akind){
 }
 
 
-/*Return the index of the next best 2+ of a kind in a hand (hand is sorted so lower 
-index corresponds to higher value).  match_idx is index of best 2+.*/
-ssize_t  find_secondary_pair(deck_t * hand, unsigned * match_counts, size_t match_idx) {
-  //Start looking 1 after index of the best 2+
-  for (size_t i = match_idx + 1; i < hand->n_cards; i++) {
-    //Don't return if the value at the index is the same as the best 2+ value
+/*Return the index of the next best match in a hand (hand is sorted so lower.
+match_idx is index of best match.*/
+ssize_t  find_secondary_pair(deck_t * hand, unsigned * match_counts, size_t match_idx) {  
+  //Start looking from the beginning of the hand
+  for (size_t i = 0; i < hand->n_cards; i++) {
+    //Don't return if the value at the index is the same as the best match value
     if ((*hand->cards[i]).value == (*hand->cards[match_idx]).value) {
       continue;
     }
-    //Return when the next 2+ is found. (this will be the next best in a sorted hand)
+    //Return when the next match is found. (this will be the next best in a sorted hand)
     else if (match_counts[i] > 1) {
       return i;
     }
