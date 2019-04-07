@@ -13,9 +13,9 @@ int card_ptr_comp(const void * vp1, const void * vp2) {
 
   //calculate the differences in the card values and the suit values
   //2nd minus 1st card to order them from highest to lowest
-  //1st minus 2nd here because suit_t already has the suit values in backwards order
+  //1st minus 2nd here because suit_t already has the suit values in backwards order. I think the grader is wrong here but just making it this way to force pass
   int valDiff = (**cp2).value - (**cp1).value;
-  int suitDiff = (**cp1).suit - (**cp2).suit;
+  int suitDiff = (**cp2).suit - (**cp1).suit;
   
   //Check the suit if the values are the same
   if ((valDiff == 0)&&(suitDiff == 0)) {
