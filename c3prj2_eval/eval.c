@@ -205,7 +205,7 @@ hand_eval_t build_hand_from_match(deck_t * hand, unsigned n, hand_ranking_t what
 
   //Take as many cards from after the matching ones as necessary to get to 5
   for (size_t i = 0; cardCount < 5; i++) {
-    ans.cards[cardCount] = hand->cards[idx+n];
+    ans.cards[cardCount] = hand->cards[idx+n+i];
     cardCount++;
   }
 
