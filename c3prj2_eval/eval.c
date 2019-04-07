@@ -8,14 +8,14 @@
 Note qsort's "normal" behavior is to sort lowest to highest*/
 int card_ptr_comp(const void * vp1, const void * vp2) {
   //define cards cp1 and cp2 to work with - pointer to a constant pointer to a constant card_t
-  const card_t * cp1 = vp1;
-  const card_t * cp2 = vp2;
+  const card_t * const * cp1 = vp1;
+  const card_t * const * cp2 = vp2;
 
   //calculate the differences in the card values and the suit values
   //2nd minus 1st card to order them from highest to lowest
   //1st minus 2nd here because suit_t already has the suit values in backwards order
-  int valDiff = cp2->value - cp1->value;
-  int suitDiff = cp1->suit - cp2->suit;
+  int valDiff = (**cp2).value - (**cp1).value;
+  int suitDiff = (**cp1).suit - (**cp2).suit;
   
   //Check the suit if the values are the same
   if ((valDiff == 0)&&(suitDiff == 0)) {
@@ -222,8 +222,14 @@ Return a positive number if hand 1 is better, 0 if the hands tie, and a negative
 if hand 2 is better*/
 int compare_hands(deck_t * hand1, deck_t * hand2) {
   //sort and evaluate hands
-  qsort(hand1->cards, hand1->n_cards, sizeof(card_t), card_ptr_comp);
-  qsort(hand2->cards, hand2->n_cards, sizeof(card_t), card_ptr_comp);
+  printf("unsorted hands\n");
+  print_hand(hand1);
+  printf("\n");
+  print_hand(hand2);
+  printf("\n");  
+  qsort(hand1->cards, hand1->n_cards, sizeof(const card_t *), card_ptr_comp);
+  qsort(hand2->cards, hand2->n_cards, sizeof(const card_t *), card_ptr_comp);
+  printf("sorted hands\n");
   print_hand(hand1);
   printf("\n");
   print_hand(hand2);
