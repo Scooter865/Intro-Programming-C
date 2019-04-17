@@ -119,68 +119,60 @@ Return -1 if an Ace-low straight was found at index, 0 if no straight was found 
 1 if any other straight was found at index*/
 int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   unsigned valDiff;
-  size_t counter = 1; //start counter at 1 b/c there is always a 1-card straight
-  int straightFlush = 1; //start true b/c there's always a 1 card flush
-  card_t ace = {.value = VALUE_ACE, .suit = fs};
-  card_t two = {.value = 2, .suit = fs};
-  card_t thatcard;
-  
-  for (size_t i = index; i < hand->n_cards; i++) {
-    if (counter == 5) {
-      if (fs == NUM_SUITS) {
-	      //printf("it's a straight!\n");
-	      return 1;
-      }
-      else if (straightFlush) {
-	      //printf("it's a straight-flush\n");
-	      return 1;
-      }
-        else {
-	      //printf("it's a straight but you needed a straight-flush\n");
-	      return 0;
-      }
-    }
-
-    //Check for Ace low straight
-    if ((counter == 4)&&((*hand->cards[i]).value == 2)) {
-      //use deck_contains to find the right 2 and A
-      if ((fs == NUM_SUITS)&&((*hand->cards[0]).value == VALUE_ACE)) {
-	      //printf("Ace low straight\n");
-	      return -1;
-      }
-      else if (straightFlush && deck_contains(hand,ace) && deck_contains(hand,two)) {
-	      //printf("Ace low straight-flush\n");
-	      return -1;
-      }
-      else {
-	      //printf("no (Ace low) straight\n");
-	      return 0;
-      }
-    }
-
-    //Begin normal straight counting logic
+  unsigned counter = 1;
+  unsigned aceLow = 0;
+  unsigned flushChk = 1;
+  card_t suitedCard;
+  //Count the number of cards in a row
+  for (size_t i = index; i < hand->n_cards-1; i++) { 
+  //n_cards-2 means that it will only run through index 5 (for a 7 card hand). 
+  //Assuming index is 0-based.
     valDiff = (*hand->cards[i]).value - (*hand->cards[i+1]).value;
     if (valDiff == 1) {
-      //counting up potential straight
       counter++;
-      thatcard.value = (*hand->cards[i]).value;
-      thatcard.suit = fs;
-      if (!deck_contains(hand,thatcard)) {
-	      straightFlush = 0;
-      }
     }
     else if (valDiff == 0) {
-      //encountered same value, skip to next card
       continue;
     }
     else {
-      //printf("no straight\n");
-      return 0;
+      break;
     }
   }
-  
-  printf("something's wrong with is_straight_at\n");
-  return 0;
+
+  //Check for Ace low straight (and increment counter if there is one)
+  if ((counter == 4) && ((*hand->cards[n_cards-1]).value == 2) && ((*hand->cards[0].value == VALUE_ACE))) {
+    counter++
+    aceLow = 1;
+  }
+
+  //Check for straight flush
+  if ((counter == 5) && (fs != NUM_SUITS)) { 
+    suitedCard = {.value = (*hand->cards[index]).value, .suit = fs};
+    for (size_t i = 0; i < (5 - aceLow); ++i) {
+      if (deck_contains(hand,suitedCard) == 0) {
+        flushChk = 0;
+        break;
+      }
+      --suitedCard.value;
+    }
+    suitedCard.value = VALUE_ACE;
+    if (deck_contains(hand,suitedCard) == 0) {
+      flushChk = 0;
+    }
+  }
+	
+  //Figure out what to return  
+  if ((counter == 5) && ((flushCheck == 1) || (fs == NUM_SUITS))) {
+    if (aceLow == 1) {
+      return -1;
+    }
+    else {
+      return 1;
+    }
+  }
+  else {
+   return 0;
+  }
 }
 
 
