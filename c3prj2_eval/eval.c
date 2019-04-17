@@ -122,7 +122,6 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   unsigned counter = 1;
   unsigned aceLow = 0;
   unsigned flushChk = 1;
-  card_t suitedCard;
   //Count the number of cards in a row
   for (size_t i = index; i < hand->n_cards-1; i++) { 
   //n_cards-2 means that it will only run through index 5 (for a 7 card hand). 
@@ -140,14 +139,14 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   }
 
   //Check for Ace low straight (and increment counter if there is one)
-  if ((counter == 4) && ((*hand->cards[n_cards-1]).value == 2) && ((*hand->cards[0].value == VALUE_ACE))) {
-    counter++
+  if ((counter == 4) && ((*hand->cards[(hand->n_cards)-1]).value == 2) && ((*hand->cards[0]).value == VALUE_ACE)) {
+    counter++;
     aceLow = 1;
   }
 
   //Check for straight flush
   if ((counter == 5) && (fs != NUM_SUITS)) { 
-    suitedCard = {.value = (*hand->cards[index]).value, .suit = fs};
+    card_t suitedCard = {(*hand->cards[index]).value, fs};
     for (size_t i = 0; i < (5 - aceLow); ++i) {
       if (deck_contains(hand,suitedCard) == 0) {
         flushChk = 0;
@@ -162,7 +161,7 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   }
 	
   //Figure out what to return  
-  if ((counter == 5) && ((flushCheck == 1) || (fs == NUM_SUITS))) {
+  if ((counter == 5) && ((flushChk == 1) || (fs == NUM_SUITS))) {
     if (aceLow == 1) {
       return -1;
     }
