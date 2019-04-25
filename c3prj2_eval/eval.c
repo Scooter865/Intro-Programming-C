@@ -113,64 +113,79 @@ ssize_t  find_secondary_pair(deck_t * hand, unsigned * match_counts, size_t matc
 }
 
 
-/* This function should determine if there is a straight starting at index in hand.
-Find any straight if fs is NUM_SUITS. Find a straight flush in the specified suit if fs is something else.
-Return -1 if an Ace-low straight was found at index, 0 if no straight was found at index, 
-1 if any other straight was found at index*/
-int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
+/*Helper function for is_straight_at
+This function counts the number of cards in a straight counting down from startIndex*/
+unsigned counterFcn(deck_t * hand, unsigned startIndex) {
+  unsigned counter = 1; //number of straight cards counted
   unsigned valDiff;
-  unsigned counter = 1;
-  unsigned aceLow = 0;
-  unsigned flushChk = 1;
-  //Count the number of cards in a row
-  for (size_t i = index; i < hand->n_cards-1; i++) { 
-  //n_cards-2 means that it will only run through index 5 (for a 7 card hand). 
-  //Assuming index is 0-based.
-    valDiff = (*hand->cards[i]).value - (*hand->cards[i+1]).value;
-    if (valDiff == 1) {
-      counter++;
-    }
-    else if (valDiff == 0) {
-      continue;
+  
+  for (size_t i = startIndex; i < hand->n_cards-1; ++i) {
+    if (counter < 5) {
+      valDiff = (*hand->cards[i]).value - (*hand->cards[i+1]).value;
+      if (valDiff == 1) {
+        counter++;
+      }
+      else if (valDiff == 0) {
+        continue;
+      }
+      else {
+        break;
+      }
     }
     else {
       break;
     }
   }
+  return counter;
+}
 
-  //Check for Ace low straight (and increment counter if there is one)
-  if ((counter == 4) && ((*hand->cards[(hand->n_cards)-1]).value == 2) && ((*hand->cards[0]).value == VALUE_ACE)) {
-    counter++;
-    aceLow = 1;
+/* This function should determine if there is a straight starting at index in hand.
+Find any straight if fs is NUM_SUITS. Find a straight flush in the specified suit if fs is something else.
+Return -1 if an Ace-low straight was found on the Ace, 0 if no straight was found at index, 
+1 if any other straight was found at index*/
+int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
+  unsigned aceLow = 0;  //possible ace-low straight
+  unsigned flushChk = 1;  //possible straight flush
+  card_t suitedCard = {(*hand->cards[index]).value, fs};  //card to check against for straight-flush
+
+  unsigned cardsInRow = counterFcn(hand, index);  //count the number of cards in a row from index
+
+  /*Find first 5 and count down again to check for Ace-low straight if there's an Ace at index:*/
+  if ((*hand->cards[index]).value == VALUE_ACE) {
+    for (size_t i = index; i < hand->n_cards; ++i) {
+      if ((*hand->cards[i]).value == 5) {
+        /*Execute counting logic here for ace-low straight. Only runs once because of break right after.*/
+        if (counterFcn(hand, i) == 4) {  //Only concerned if a straight is found (i.e. 5-2 counted)
+          aceLow = 1;
+          suitedCard.value = 5;  //suitedCard used for straight flush checking from 5-A
+        }
+        break;
+      }
+    }
   }
 
-  //Check for straight flush
-  if ((counter == 5) && (fs != NUM_SUITS)) { 
-    card_t suitedCard = {(*hand->cards[index]).value, fs};
-    for (size_t i = 0; i < (5 - aceLow); ++i) {
+  /*Check for straight flush if there is a straight:*/
+  if (((cardsInRow == 5) || (aceLow = 1)) && (fs != NUM_SUITS)) { 
+    for (size_t i = 0; i < (5 - aceLow); ++i) {  //only need to check the 5-2 against the A for ace-low
       if (deck_contains(hand,suitedCard) == 0) {
         flushChk = 0;
         break;
       }
       --suitedCard.value;
     }
-    suitedCard.value = VALUE_ACE;
-    if (deck_contains(hand,suitedCard) == 0) {
-      flushChk = 0;
-    }
   }
-	
-  //Figure out what to return  
-  if ((counter == 5) && ((flushChk == 1) || (fs == NUM_SUITS))) {
+  
+  /*Figure out what to return*/
+  if ((flushChk == 1) || (fs == NUM_SUITS)) {
     if (aceLow == 1) {
       return -1;
     }
-    else {
+    else if (cardsInRow == 5) {
       return 1;
     }
   }
   else {
-   return 0;
+    return 0;
   }
 }
 
