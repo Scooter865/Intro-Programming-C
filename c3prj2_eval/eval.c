@@ -165,13 +165,18 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   }
 
   /*Check for straight flush if there is a straight:*/
-  if (((cardsInRow == 5) || (aceLow == 1)) && (fs != NUM_SUITS)) { 
-    for (size_t i = 0; i < (5 - aceLow); ++i) {  //only need to check the 5-2 against the A for ace-low
-      if (deck_contains(hand,suitedCard) == 0) {
-        flushChk = 0;
-        break;
+  if (((cardsInRow == 5) || (aceLow == 1)) && (fs != NUM_SUITS)) {
+    if ((aceLow != 1) && ((*hand->cards[index]).suit != fs)) {
+      flushChk = 0;
+    }
+    else {
+      for (size_t i = 0; i < (5 - aceLow); ++i) {  //only need to check the 5-2 against the A for ace-low
+	if (deck_contains(hand,suitedCard) == 0) {
+	  flushChk = 0;
+	  break;
+	}
+	--suitedCard.value;
       }
-      --suitedCard.value;
     }
   }
   
