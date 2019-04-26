@@ -184,9 +184,7 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
       return 1;
     }
   }
-  else {
-    return 0;
-  }
+  return 0;  //basically acts as else and catches non-straights
 }
 
 
