@@ -1,4 +1,17 @@
-rotate-matrix: read-matrix.o rotate-matrix.o
-	gcc -o rotate-matrix read-matrix.o rotate-matrix.o
-rotate-matrix.o: rotate-matrix.c
-	gcc -pedantic -std=gnu99 -Wall -Werror -ggdb3 -c rotate-matrix.c
+CFLAGS=-pedantic -std=gnu99 -Wall -Werror -ggdb3
+
+breaker: break_encr.o
+	gcc -o breaker break_encr.o
+
+encryptor: encryptor.o
+	gcc -o encryptor encryptor.o
+
+%.o: %.c
+	gcc $(CFLAGS) -c $<
+
+.PHONY: clean
+clean:
+	rm -f *.o *.c~ *.h~
+
+#specify header dependencies here if needed
+#filename.o: filename.h

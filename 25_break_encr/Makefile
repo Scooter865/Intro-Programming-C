@@ -3,8 +3,8 @@ CFLAGS=-pedantic -std=gnu99 -Wall -Werror -ggdb3
 breaker: break_encr.o
 	gcc -o breaker break_encr.o
 
-#encryptor: encryptor.o
-#	gcc -o encryptor encryptor.o
+encryptor: encryptor.o
+	gcc -o encryptor encryptor.o
 
 %.o: %.c
 	gcc $(CFLAGS) -c $<

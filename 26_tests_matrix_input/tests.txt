@@ -5,3 +5,5 @@ NonUnicode.txt
 NonExistentFile.txt
 SkipFirstChar.txt
 NullTerminators.txt
+10by10zeros.txt 9by9zeros.txt
+
