@@ -58,7 +58,8 @@ int main(int argc, char ** argv) {
     key = encryptedE - 4;
   }
   else {
-    printf("something is wrong with the code.\n");
+    printf("I think key is out of range.\n");
+    return EXIT_FAILURE;
   }
   
   printf("%d\n", key);
