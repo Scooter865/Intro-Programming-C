@@ -52,7 +52,7 @@ int main(int argc, char ** argv) {
   //calculate the key based with the encrypted e
   unsigned key;
   if ((encryptedE >= 0) && (encryptedE < 4)) {
-    key = encryptedE + 4;
+    key = encryptedE + 22;
   }
   else if ((encryptedE >= 4) && (encryptedE < 26)) {
     key = encryptedE - 4;
