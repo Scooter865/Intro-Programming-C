@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
 /*Count the frequency of characters in a stream and write how many
 times a specific character appears to an array. Return a pointer
@@ -30,37 +31,37 @@ int findE(int * freqArray) {
 
 
 int main(int argc, char ** argv) {
-	//error handling
-	if (argc != 2) {
-		fprintf(stderr, "Please specify a valid file name\n");
-		return EXIT_FAILURE;
-	}
-	FILE * f = fopen(argv[1], "r");
-	if (f == NULL) {
-		perror("Failed to open file");
-	}
-
-	//Scan the file at this point with charCount
-	int * charFreq;
-	charFreq = charCount(f);
-
-	//Find the encrypted e
-	int encryptedE
-	encryptedE = findE(charFreq);
-
-	//calculate the key based with the encrypted e
-	unsigned key;
-	if ((encryptedE >= 0) && (encryptedE < 4)) {
-		key = encryptedE + 4;
-	}
-	else if ((encryptedE >= 4) && (encryptedE < 26)) {
-		key = encryptedE - 4;
-	}
-	else {
-		printf("something is wrong with the code.\n");
-	}
-
-	printf("%d\n", key);
-
-	return EXIT_SUCCESS;
+  //error handling
+  if (argc != 2) {
+    fprintf(stderr, "Please specify a valid file name\n");
+    return EXIT_FAILURE;
+  }
+  FILE * f = fopen(argv[1], "r");
+  if (f == NULL) {
+    perror("Failed to open file");
+  }
+  
+  //Scan the file at this point with charCount
+  int * charFreq;
+  charFreq = charCount(f);
+  
+  //Find the encrypted e
+  int encryptedE;
+  encryptedE = findE(charFreq);
+  
+  //calculate the key based with the encrypted e
+  unsigned key;
+  if ((encryptedE >= 0) && (encryptedE < 4)) {
+    key = encryptedE + 4;
+  }
+  else if ((encryptedE >= 4) && (encryptedE < 26)) {
+    key = encryptedE - 4;
+  }
+  else {
+    printf("something is wrong with the code.\n");
+  }
+  
+  printf("%d\n", key);
+  
+  return EXIT_SUCCESS;
 }
