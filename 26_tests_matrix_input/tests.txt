@@ -3,3 +3,5 @@
 11by11zeros.txt
 NonUnicode.txt
 NonExistentFile.txt
+SkipFirstChar.txt
+NullTerminators.txt
