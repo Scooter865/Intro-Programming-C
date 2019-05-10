@@ -42,10 +42,12 @@ void readMatrix(FILE * stream, char * matrix) {
 int main(int argc, char ** argv) {
   if (argc != 2) {
     fprintf(stderr, "Please specify a valid file name\n");
+    return EXIT_FAILURE;
   }
   FILE * f = fopen(argv[1],"r");
   if (f == NULL) {
-    perror("Failed to open file");
+    fprintf(stderr, "Failed to open file");
+    return EXIT_FAILURE;
   }
   
   //initialize the matrix
