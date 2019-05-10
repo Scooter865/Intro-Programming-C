@@ -1,0 +1,1 @@
+../26_tests_matrix_input/SkipFirstChar.txt
