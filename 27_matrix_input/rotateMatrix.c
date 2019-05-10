@@ -15,14 +15,14 @@ void readMatrix(FILE * stream, char * matrix) {
     //count each row read, fail if too many rows read
     numrows++;
     if (numrows > ROWS) {
-      printf("Too many rows\n");
+      fprintf(stderr, "Too many rows\n");
       exit(EXIT_FAILURE);
     }
     
     //find a newline and make sure it's in the right place (after 10 chars)
     newLineLoc = strchr(row, '\n');
     if (newLineLoc != (row + ROWS)) {
-      printf("Row too short or too long.\n");
+      fprintf(stderr, "Row too short or too long.\n");
       exit(EXIT_FAILURE);
     }
     
@@ -34,7 +34,7 @@ void readMatrix(FILE * stream, char * matrix) {
   
   //fail if too few rows read
   if (numrows < ROWS) {
-    printf("Too few rows.\n");
+    fprintf(stderr, "Too few rows.\n");
     exit(EXIT_FAILURE);
   }
 }
