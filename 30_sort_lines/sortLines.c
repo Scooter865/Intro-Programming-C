@@ -36,7 +36,7 @@ void doEverything(FILE * inputFile) {
   
   //print and free each line
   for (size_t i = 0; i < nLines; ++i) {
-    printf("%s\n", arrayOfStr[i]);
+    printf("%s", arrayOfStr[i]);
     free(arrayOfStr[i]);
   }
   free(arrayOfStr);
