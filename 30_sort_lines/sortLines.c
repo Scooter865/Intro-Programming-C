@@ -26,10 +26,17 @@ void doEverything(FILE * inputFile) {
   while (getline(&line, &lineSz, inputFile) >= 0) {
     nLines++;
     arrayOfStr = realloc(arrayOfStr, nLines * sizeof(*arrayOfStr));
+    if (arrayOfStr == NULL) {
+      fprintf(stderr,"something is wrong with the array\n");
+    }
     arrayOfStr[nLines-1] = line;
     line = NULL;
   }
   free(line);
+  if (nLines < 1) {
+    fprintf(stderr, "improper formatting\n");
+    exit(EXIT_FAILURE);
+  }
   
   //sort the data
   sortData(arrayOfStr, nLines);
