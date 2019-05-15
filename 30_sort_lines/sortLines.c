@@ -33,8 +33,8 @@ void doEverything(FILE * inputFile) {
     line = NULL;
   }
   free(line);
-  if (nLines < 1) {
-    fprintf(stderr, "improper formatting\n");
+  if (nLines < 2) {
+    fprintf(stderr, "not enough lines\n");
     exit(EXIT_FAILURE);
   }
   
