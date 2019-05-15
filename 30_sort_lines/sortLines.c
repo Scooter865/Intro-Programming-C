@@ -57,7 +57,7 @@ int main(int argc, char ** argv) {
   else if (argc > 1) {
     //open file, create array, sort array, print array, close file
     for (size_t i = 1; i < argc; ++i){
-      FILE * curFile = fopen(argv[1], "r");
+      FILE * curFile = fopen(argv[i], "r");
       if (curFile == NULL) {
 	fprintf(stderr, "problem openning file\n");
 	return(EXIT_FAILURE);
