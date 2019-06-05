@@ -157,7 +157,7 @@ int checkWin(board_t * b) {
   //search each coordinate on the board for UNKNOWN
   for (int y = 0; y < b->height; ++y) {
     for (int x = 0; x < b->width; ++x) {
-      if (b->board[y][x] = UNKNOWN) {
+      if (b->board[y][x] == UNKNOWN) {
         //not a win if there are any UNKNOWNs
         win = 0;
       }
@@ -168,7 +168,7 @@ int checkWin(board_t * b) {
 
 
 void freeBoard(board_t * b) {
-  for (int y = 0; y < h; ++y) {
+  for (int y = 0; y < b->height; ++y) {
     free(b->board[y]);
   }
   free(b);
