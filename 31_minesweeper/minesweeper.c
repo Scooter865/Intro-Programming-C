@@ -44,18 +44,23 @@ void addRandomMine(board_t * b) {
 board_t * makeBoard(int w, int h, int numMines) {
   //Allocate space for a board_t and populate width, height, number of mines
   board_t * b = malloc(sizeof(board_t));
+  b->board = malloc(h * sizeof(int*));
   b->width = w;
   b->height = h;
   b->totalMines = numMines;
   //Allocate w int pointers for h rows
   for (int y = 0; y < h; ++y) {
-    b->board[y] = malloc(w * sizeof(int*));
+    b->board[y] = malloc(w * sizeof(int));
   }
   //Populate the board with UNKNOWNs
   for (int y = 0; y < h; ++y) {
     for (int x = 0; x < w; ++x) {
       b->board[y][x] = UNKNOWN;
     }
+  }
+  //randomly place mines on board
+  for (int i = 0; i < numMines; ++i) {
+    addRandomMine(b);
   }
   return b;
 }
@@ -116,9 +121,9 @@ void printBoard(board_t * b) {
 int countMines(board_t * b, int x, int y) {
   int mineCount = 0;
   //search each surrounding coordinate
-  for (int c = x-1; c < x+1; ++c) {
-    for (int r = y-1; r < y+1; ++r) {
-      if ((r < 0) || (r > b->height) || (c < 0) || (c > b->width)) {
+  for (int c = x-1; c <= x+1; ++c) {
+    for (int r = y-1; r <= y+1; ++r) {
+      if ((r < 0) || (r >= b->height) || (c < 0) || (c >= b->width)) {
         //do nothing if coordinate is out of bounds
         continue;
       }
@@ -171,6 +176,7 @@ void freeBoard(board_t * b) {
   for (int y = 0; y < b->height; ++y) {
     free(b->board[y]);
   }
+  free(b->board);
   free(b);
 }
 
