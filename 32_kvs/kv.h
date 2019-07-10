@@ -3,8 +3,8 @@
 
 
 struct _kvpair_t { 
-  char key;
-  char value;
+  char * key;
+  char * value;
 };
 typedef struct _kvpair_t kvpair_t;
 
