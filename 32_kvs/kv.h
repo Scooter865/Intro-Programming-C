@@ -10,7 +10,7 @@ typedef struct _kvpair_t kvpair_t;
 
 struct _kvarray_t { 
   size_t nKVs;
-  kvpair_t kvArray[nKVs];
+  kvpair_t kvArray[];
 };
 typedef struct _kvarray_t kvarray_t;
 
