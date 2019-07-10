@@ -36,30 +36,6 @@ void getVal(FILE * file, char * curVal) {
 }
 
 
-int writePair(FILE * file, kvarray_t * targetStruct, size_t pairIdx) {
-  char * curKey = malloc(sizeof(char));
-  char * curVal = malloc(sizeof(char));
-  getKey(file, curKey);
-  getVal(file, curVal);
-  
-  //indicate to calling function when EOF is encountered
-  if ((curKey == NULL)||(curVal == NULL)) {
-    return 0;
-  }
-  
-  //need to write duplicate check
-
-  targetStruct->nKVs = pairIdx + 1;
-  targetStruct = realloc(targetStruct, sizeof(kvpair_t) + (targetStruct->nKVs * sizeof(kvpair_t)));
-  (targetStruct->kvArray[pairIdx]).key = curKey;
-  (targetStruct->kvArray[pairIdx]).value = curVal;
-  
-  //indicate to calling function that a pair was written
-  return 1;
-  //Not free-ing anything here, free-ing to be done in freeKVs
-}
-
-
 kvarray_t * readKVs(const char * fname) {
   //Open file
   FILE * f = fopen(fname, "r");
@@ -72,15 +48,23 @@ kvarray_t * readKVs(const char * fname) {
   kvarray_t * kvPairs = malloc(sizeof(kvarray_t));
   kvPairs->nKVs = 0;
 
-  //Call funciton to write pairs as long as EOF hasn't been reached
-  int pairWritten = 1;
-  size_t pairNo = 0; //purposely not using nKVs for empty file corner case
-  do {
-    pairWritten = writePair(f, kvPairs, pairNo);
-    pairNo++;
+  char * curKey = malloc(sizeof(char));
+  char * curVal = malloc(sizeof(char));
+  getKey(f, curKey);
+  getVal(f, curVal);
+
+  while((curKey != NULL)&&(curVal != NULL)) {
+    (kvPairs->nKVs)++;
+    kvPairs = realloc(kvPairs, sizeof(kvarray_t) + (kvPairs->nKVs)*sizeof(kvpair_t));
+    kvPairs->kvArray[kvPairs->nKVs - 1].key = curKey;
+    kvPairs->kvArray[kvPairs->nKVs - 1].value = curVal;
+    
+    char * curKey = malloc(sizeof(char));
+    char * curVal = malloc(sizeof(char));
+    getKey(f, curKey);
+    getVal(f, curVal);
   }
-  while (pairWritten != 0);
-  
+
   //Close file
   if(fclose(f) != 0) {
     fprintf(stderr, "Problem closing file\n");
