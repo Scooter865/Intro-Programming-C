@@ -45,28 +45,28 @@ kvarray_t * readKVs(const char * fname) {
     fprintf(stderr, "Problem opening file\n");
     exit(EXIT_FAILURE);
   }
-
   //Allocate the struct to write kv pairs to
   kvarray_t * kvPairs = malloc(sizeof(kvarray_t));
   kvPairs->nKVs = 0;
-
-  char * curKey = malloc(sizeof(char));
-  char * curVal = malloc(sizeof(char));
-  int keyEOF = getKey(f, curKey);
-  int valEOF = getVal(f, curVal);
-
+  int keyEOF = 0;
+  int valEOF = 0;
+  char * curKey;
+  char * curVal;
   while((keyEOF != -1)&&(valEOF != -1)) {
-    (kvPairs->nKVs)++;
-    kvPairs = realloc(kvPairs, sizeof(kvarray_t) + (kvPairs->nKVs)*sizeof(kvpair_t)); //this is correct for reallocation
-    kvPairs->kvArray[kvPairs->nKVs - 1].key = curKey; 
-    kvPairs->kvArray[kvPairs->nKVs - 1].value = curVal; 
-    
     curKey = malloc(sizeof(char));
     curVal = malloc(sizeof(char));
     keyEOF = getKey(f, curKey);
     valEOF = getVal(f, curVal);
+    if((keyEOF == -1)&&(valEOF == -1)){
+      break;
+    }
+    else {
+      (kvPairs->nKVs)++;
+      kvPairs = realloc(kvPairs, sizeof(kvarray_t) + (kvPairs->nKVs)*sizeof(kvpair_t));
+      kvPairs->kvArray[kvPairs->nKVs - 1].key = curKey; 
+      kvPairs->kvArray[kvPairs->nKVs - 1].value = curVal;
+    }
   }
-
   //Close file
   if(fclose(f) != 0) {
     fprintf(stderr, "Problem closing file\n");
