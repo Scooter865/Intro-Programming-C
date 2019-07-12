@@ -4,12 +4,12 @@
 #include "kv.h"
 
 
-void getKey(FILE * file, char * curKey) {
+int getKey(FILE * file, char * curKey) {
   int k;
   size_t i = 0;
   while((k = fgetc(file)) != '=') {
     if (k == EOF) {
-      curKey = NULL; //using NULL to indicate EOF
+      return k;
     }
     else {
       curKey = realloc(curKey, (i+1) * sizeof(char));
@@ -17,15 +17,16 @@ void getKey(FILE * file, char * curKey) {
       i++;
     }
   }
+  return k;
 }
 
 
-void getVal(FILE * file, char * curVal) {
+int getVal(FILE * file, char * curVal) {
   int v;
   size_t i = 0;
   while((v = fgetc(file)) != '\n') {
     if (v == EOF) {
-      curVal = NULL;
+      return v;
     }
     else {
       curVal = realloc(curVal, (i+1) * sizeof(char));
@@ -33,6 +34,7 @@ void getVal(FILE * file, char * curVal) {
       i++;
     }
   }
+  return v;
 }
 
 
@@ -50,19 +52,19 @@ kvarray_t * readKVs(const char * fname) {
 
   char * curKey = malloc(sizeof(char));
   char * curVal = malloc(sizeof(char));
-  getKey(f, curKey);
-  getVal(f, curVal);
+  int keyEOF = getKey(f, curKey);
+  int valEOF = getVal(f, curVal);
 
-  while((curKey != NULL)&&(curVal != NULL)) {
+  while((keyEOF != -1)&&(valEOF != -1)) {
     (kvPairs->nKVs)++;
-    kvPairs = realloc(kvPairs, sizeof(kvarray_t) + (kvPairs->nKVs)*sizeof(kvpair_t));
-    kvPairs->kvArray[kvPairs->nKVs - 1].key = curKey;
-    kvPairs->kvArray[kvPairs->nKVs - 1].value = curVal;
+    kvPairs = realloc(kvPairs, sizeof(kvarray_t) + (kvPairs->nKVs)*sizeof(kvpair_t)); //this is correct for reallocation
+    kvPairs->kvArray[kvPairs->nKVs - 1].key = curKey; 
+    kvPairs->kvArray[kvPairs->nKVs - 1].value = curVal; 
     
-    char * curKey = malloc(sizeof(char));
-    char * curVal = malloc(sizeof(char));
-    getKey(f, curKey);
-    getVal(f, curVal);
+    curKey = malloc(sizeof(char));
+    curVal = malloc(sizeof(char));
+    keyEOF = getKey(f, curKey);
+    valEOF = getVal(f, curVal);
   }
 
   //Close file
