@@ -6,22 +6,20 @@
 /*Returns a key string from a line*/
 char * getKey(char * line) {
   int keyLen = 0;
-  char * keyStr = NULL;
   keyLen = strchr(line, '=') - line;
-  strncpy(keyStr, line, keyLen);
-  keyStr[keyLen + 1] = '\0';
-  return keyStr;
+  char keyStr[keyLen + 1];
+  keyStr[keyLen + 1] = '\0'; //have to add null terminiator because strncpy doesn't
+  return strncpy(keyStr, line, keyLen);
 }
 
 
 char * getVal(char * line) {
-  char * valStr = NULL;
   size_t keyLen = 0;
   size_t valLen = 0;
-
-  //Copy the characters after '=' and before '\n' to a string and return it
   keyLen = strlen(getKey(line));
-  valLen = strchr(line, '\n') - strchr(line, '=');
+  valLen = strchr(line, '\n') - strchr(line, '=') - 2; //lines delimited by \r\n so -2 instead of -1
+  char valStr[valLen + 1];
+  valStr[valLen + 1] = '\0';
   return strncpy(valStr, (line + keyLen + 1), valLen);
 }
 
@@ -52,7 +50,7 @@ kvarray_t * readKVs(const char * fname) {
     kvArray->nPairs++;
     i = kvArray->nPairs - 1;
 
-    //Functions to read pairs, retrun key and/or value string
+    //Functions to read pairs, retrun key or value string
     char * curKey = getKey(line);
     char * curVal = getVal(line);
 
