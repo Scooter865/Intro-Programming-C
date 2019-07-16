@@ -5,21 +5,20 @@
 
 /*Returns a key string from a line*/
 char * getKey(char * line) {
-  int keyLen = 0;
-  keyLen = strchr(line, '=') - line;
-  char keyStr[keyLen + 1];
-  keyStr[keyLen + 1] = '\0'; //have to add null terminiator because strncpy doesn't
+  size_t keyLen = (strchr(line, '=') - line);
+  char keyStr[keyLen+1];
+  memset(keyStr, '\0', keyLen+1);
   return strncpy(keyStr, line, keyLen);
 }
 
-
+/*Returns a value string from a line*/
 char * getVal(char * line) {
   size_t keyLen = 0;
   size_t valLen = 0;
   keyLen = strlen(getKey(line));
   valLen = strchr(line, '\n') - strchr(line, '=') - 2; //lines delimited by \r\n so -2 instead of -1
   char valStr[valLen + 1];
-  valStr[valLen + 1] = '\0';
+  memset(valStr, '\0', valLen+1);
   return strncpy(valStr, (line + keyLen + 1), valLen);
 }
 
@@ -39,11 +38,13 @@ kvarray_t * readKVs(const char * fname) {
   kvArray->nPairs = 0; //Maybe start with 1?
 
   //Allocate memory for the array of pointers to kvpair_ts 
-  kvArray->pairs = malloc((kvArray->nPairs) * sizeof(kvpair_t*)); //Won't actually do anything with nPairs = 0
+  //kvArray->pairs = malloc((kvArray->nPairs) * sizeof(kvpair_t*)); //Won't actually do anything with nPairs = 0
 
   char * line = NULL; //line to search for key-value combo on
   size_t lnSz = 0;
   size_t i = 0;
+  //char * curKey;
+  //char * curVal;
   //Begin KV reading/writing loop
   while (getline(&line, &lnSz, file) > 0) {
     //New KV pair to read/write
@@ -51,18 +52,18 @@ kvarray_t * readKVs(const char * fname) {
     i = kvArray->nPairs - 1;
 
     //Functions to read pairs, retrun key or value string
-    char * curKey = getKey(line);
-    char * curVal = getVal(line);
+    //curKey = getKey(line);
+    //curVal = getVal(line);
 
     //Resize array of pointers to kvpair_ts for new KV combo
     kvArray->pairs = realloc(kvArray->pairs, (kvArray->nPairs) * sizeof(kvpair_t*));
     //Allocate memory for new kvpair_t and its contents
     kvArray->pairs[i] = malloc(sizeof(kvpair_t));
-    kvArray->pairs[i]->key = malloc(sizeof(char) * (strlen(curKey) + 1));
-    kvArray->pairs[i]->val = malloc(sizeof(char) * (strlen(curVal) + 1));
+    kvArray->pairs[i]->key = malloc(sizeof(char) * (strlen(getKey(line)) + 1));
+    kvArray->pairs[i]->val = malloc(sizeof(char) * (strlen(getVal(line)) + 1));
     //Write key and value to newly allocated kvpair_t
-    strcpy(kvArray->pairs[i]->key, curKey);
-    strcpy(kvArray->pairs[i]->val, curVal);
+    strcpy(kvArray->pairs[i]->key, getKey(line));
+    strcpy(kvArray->pairs[i]->val, getVal(line));
   } //End KV reading/writing loop
 
   //Free line here since it is only for temporary use and not part of the kvarray_t
