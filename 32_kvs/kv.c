@@ -16,7 +16,7 @@ char * getKey(char * line) {
 
 /*Returns a value string from a line*/
 char * getVal(char * line, size_t keyLen) {
-  size_t valLen = strchr(line, '\n') - strchr(line, '=') - 2; //lines delimited by \r\n so -2 instead of -1
+  size_t valLen = strchr(line, '\n') - strchr(line, '=') - 1; //lines delimited by \r\n so -2 instead of -1
   char valStr[valLen + 1];
   memset(valStr, '\0', valLen+1);
   strncpy(valStr, (line + keyLen + 1), valLen);
