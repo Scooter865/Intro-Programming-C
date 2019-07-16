@@ -8,7 +8,7 @@ typedef struct _one_count_t one_count_t;
 
 struct _counts_t {
   one_count_t ** oneCntArray;
-  size_t nStrs;
+  size_t nStr;
   size_t nUnk;
 };
 typedef struct _counts_t counts_t;
