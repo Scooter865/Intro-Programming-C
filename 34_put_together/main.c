@@ -13,7 +13,7 @@ counts_t * countFile(const char * filename, kvarray_t * kvPairs) {
     exit(EXIT_FAILURE);
   }
 
-  counts_t * curCounts = createCounts(void); //Initialize a count array
+  counts_t * curCounts = createCounts(); //Initialize a count array
 
   char * curKey = NULL;
   size_t lineSz = 0;
@@ -24,7 +24,7 @@ counts_t * countFile(const char * filename, kvarray_t * kvPairs) {
 
   free(curKey); //Free the memory used to read lines
 
-  if (fclose(filename) != 0) { //Close the key file
+  if (fclose(keyFILE) != 0) { //Close the key file
     fprintf(stderr, "Problem closing key file\n");
     exit(EXIT_FAILURE);
   }
@@ -51,18 +51,18 @@ int main(int argc, char ** argv) {
     char * outName = computeOutputFileName(argv[i]);
 
     //open the file named by outName (call that f)
-    FILE * f = fopen(outName);
+    FILE * f = fopen(outName, "w+");
     if (f == NULL) {
-      fprintf(stderr, "Problem opening output file %u\n", i);
-      eixt(EXIT_FAILURE)
+      fprintf(stderr, "Problem opening output file %zu\n", i);
+      exit(EXIT_FAILURE);
     }
 
     //print the counts from c into the FILE f
-    printCounts(c, outName);
+    printCounts(c, f);
 
     //close f
     if (fclose(f) != 0) {
-      fprintf(stderr, "Problem closeing output file %u\n", i);
+      fprintf(stderr, "Problem closeing output file %zu\n", i);
     }
 
     //free the memory for outName and c
