@@ -15,10 +15,14 @@ counts_t * countFile(const char * filename, kvarray_t * kvPairs) {
 
   counts_t * curCounts = createCounts(); //Initialize a count array
 
-  char * curKey = NULL;
   size_t lineSz = 0;
+  char * curKey = NULL;
+  size_t curKeyLen = 0;
+  char * curValue = NULL;
   while(getline(&curKey, &lineSz, keyFILE) > 0) { //Enter key file reading loop
-    char * curValue = lookupValue(kvPairs, curKey); //Lookup the value for a given key
+    curKeyLen = strlen(curKey);
+    curKey[curKeyLen - 1] = '\0';
+    curValue = lookupValue(kvPairs, curKey); //Lookup the value for a given key
     addCount(curCounts, curValue); //Count up for the value
   }
 
@@ -41,7 +45,7 @@ int main(int argc, char ** argv) {
   kvarray_t * kv = readKVs(argv[1]);
 
  //count from 2 to argc (call the number you count i)
-  for (size_t i = 0; i < argc; i++) {
+  for (size_t i = 2; i < argc; i++) {
 
     //count the values that appear in the file named by argv[i], using kv as the key/value pair
     //   (call this result c)

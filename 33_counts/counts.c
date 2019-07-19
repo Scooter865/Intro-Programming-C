@@ -54,10 +54,10 @@ first added, with unknown always appearing last. If there
 are no unknown values, you should not print a line for unknown.*/
 void printCounts(counts_t * c, FILE * outFile) {
   for (size_t i = 0; i < c->nStr; i++) {
-    printf("%s: %zu\n", c->oneCntArray[i]->str, c->oneCntArray[i]->strCnt);
+    fprintf(outFile, "%s: %zu\n", c->oneCntArray[i]->str, c->oneCntArray[i]->strCnt);
   }
   if (c->nUnk != 0) {
-    printf("<unknown> : %zu\n", c->nUnk);
+    fprintf(outFile, "<unknown> : %zu\n", c->nUnk);
   }
 }
 
