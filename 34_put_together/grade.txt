@@ -1,4 +1,4 @@
-Grading at Thu Jul 18 23:58:55 UTC 2019
+Grading at Fri Jul 19 00:39:27 UTC 2019
 Attempting to compile:
 rm -f  outname.o  counts.o  main.o  kv.o count_values *~
 gcc -c -Wall -Werror -std=gnu99 -pedantic -ggdb3 outname.c
@@ -13,53 +13,33 @@ testcase1 passed, your program successfully indicated a failure
 valgrind was clean
 #################################################
 testcase2:
-<unknown> : 73
-<unknown> : 21
-<unknown> : 11
-<unknown> : 10
-<unknown> : 73
-<unknown> : 21
-<unknown> : 11
-<unknown> : 10
-Your file did not match the expected ouput
+Your file matched the expected output
 Comparing file list1a.txt.counts with answer
 Your output is correct
 Comparing file list1b.txt.counts with answer
-Your file did not match the expected ouput
-Your output is incorrect
+Your file matched the expected output
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 #################################################
 testcase3:
-<unknown> : 73
-<unknown> : 12
-<unknown> : 5
-<unknown> : 8
-<unknown> : 8
-<unknown> : 73
-<unknown> : 12
-<unknown> : 5
-<unknown> : 8
-<unknown> : 8
-Your file did not match the expected ouput
+Your file matched the expected output
 Comparing file list2a.txt.counts with answer
 Your output is correct
 Comparing file list2b.txt.counts with answer
-Your file did not match the expected ouput
-Your output is incorrect
+Your file matched the expected output
+Your output is correct
 Comparing file list2c.txt.counts with answer
-Your file did not match the expected ouput
-Your output is incorrect
+Your file matched the expected output
+Your output is correct
+  - Valgrind was clean (no errors, no memory leaks)
+valgrind was clean
 #################################################
 testcase4:
-<unknown> : 73
-<unknown> : 8
-<unknown> : 7
-<unknown> : 73
-<unknown> : 8
-<unknown> : 7
-Your file did not match the expected ouput
+Your file matched the expected output
 Comparing file list3a.txt.counts with answer
 Your output is correct
   - Valgrind was clean (no errors, no memory leaks)
 valgrind was clean
 
-Overall Grade: D
+Overall Grade: A
