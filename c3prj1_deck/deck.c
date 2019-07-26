@@ -91,3 +91,24 @@ void assert_full_deck(deck_t * d) {
   assert(fulldeck);
 }
 
+
+/*Add the particular card to the given deck (which will involve
+reallocing the array of cards in that deck). Assuming that deck
+is already alloc'd because this function doesn't return anything*/
+void add_card_to(deck_t * deck, card_t c) {
+  deck->n_cards++;
+  deck->cards = realloc(deck->cards, deck->n_cards * sizeof(card_t*)); //allocate space for the new card pointer
+  deck->cards[n_cards-1] = malloc(card_t); //allocate space for the card
+  *(deck->cards[n_cards-1]) = c;
+}
+
+
+/*Add a card whose value and suit are both 0, and return a pointer
+to it in the deck. This will add an invalid card to use as a
+placeholder for an unknown card.*/
+card_t * add_empty_card(deck_t * deck) {
+  card_t empty;
+  empty.value = 
+  empty.suit = 
+  add_card_to(deck, )
+}
