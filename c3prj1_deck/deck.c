@@ -99,9 +99,9 @@ reallocing the array of cards in that deck). Assuming that deck
 is already alloc'd because this function doesn't return anything*/
 void add_card_to(deck_t * deck, card_t c) {
   deck->n_cards++;
-  if (deck->n_cards == 1) {
-    deck->cards = malloc(sizeof(card_t*));
-  }
+  //if (deck->n_cards == 1) {
+  //  deck->cards = malloc(sizeof(card_t*));
+  //}
   deck->cards = realloc(deck->cards, deck->n_cards * sizeof(card_t*)); //allocate space for the new card pointer
   deck->cards[deck->n_cards-1] = malloc(sizeof(card_t)); //allocate space for the card
   *deck->cards[deck->n_cards-1] = c;
@@ -129,6 +129,8 @@ in Course 2 and int deck_contains(deck_t * d, card_t c) in Course 3!
 They might be useful here.*/
 deck_t * make_deck_exclude(deck_t * excluded_cards) {
   deck_t * builtDeck = malloc(sizeof(deck_t)); //Allocate a deck_t
+  builtDeck->cards = NULL;
+  builtDeck->n_cards = 0;
   card_t card;
   for (size_t i = 0; i < 52; i++) { //Iterate through all cards
     card = card_from_num(i);
