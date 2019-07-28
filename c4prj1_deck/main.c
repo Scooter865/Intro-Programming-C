@@ -22,7 +22,11 @@ int main(void) {
   print_hand(hand1);
 
   printf("here's the hand's match counts\n");
-  get_match_counts(hand1);
+  unsigned * matchArray = get_match_counts(hand1);
+  for (unsigned i = 0; i < 7; i++) {
+    printf("%u ", matchArray[i]);
+  }
+  printf("\n");
 
   printf("here's the rest of the deck\n");
   deck_t * restOfDeck = make_deck_exclude(hand1);
