@@ -21,6 +21,9 @@ int main(void) {
   printf("here's the hand:\n");
   print_hand(hand1);
 
+  printf("here's the hand's match counts\n");
+  get_match_counts(hand1);
+
   printf("here's the rest of the deck\n");
   deck_t * restOfDeck = make_deck_exclude(hand1);
   print_hand(restOfDeck);
