@@ -46,6 +46,7 @@ const char * ranking_to_string(hand_ranking_t r) {
   }
 }
 
+
 char value_letter(card_t c) {
   char x;
   if ((c.value >= 2) && (c.value <= 9)) {
@@ -77,11 +78,13 @@ char suit_letter(card_t c) {
   return x;
 }
 
+
 void print_card(card_t c) {
   char value = value_letter(c);
   char suit = suit_letter(c);
   printf("%c%c",value,suit);
 }
+
 
 card_t card_from_letters(char value_let, char suit_let) {
   card_t temp;
@@ -116,6 +119,7 @@ card_t card_from_letters(char value_let, char suit_let) {
   }
   return temp;
 }
+
 
 card_t card_from_num(unsigned c) {
   card_t temp;
