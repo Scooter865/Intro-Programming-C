@@ -288,7 +288,7 @@ unsigned * get_match_counts(deck_t * hand) {
       case 2:           twoCnt++;   break;
     }
   }
-  for (size_t i = 0, i < hand->n_cards; i++) { //write the counts to the array
+  for (size_t i = 0; i < hand->n_cards; i++) { //write the counts to the array
     switch (hand->cards[i]->value) {
       case VALUE_ACE:   counts[i] = aceCnt;   break;
       case VALUE_KING:  counts[i] = kingCnt;  break;

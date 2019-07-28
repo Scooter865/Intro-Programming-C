@@ -100,8 +100,8 @@ is already alloc'd because this function doesn't return anything*/
 void add_card_to(deck_t * deck, card_t c) {
   deck->n_cards++;
   deck->cards = realloc(deck->cards, deck->n_cards * sizeof(card_t*)); //allocate space for the new card pointer
-  deck->cards[n_cards-1] = malloc(card_t); //allocate space for the card
-  *deck->cards[n_cards-1] = c;
+  deck->cards[deck->n_cards-1] = malloc(sizeof(card_t)); //allocate space for the card
+  *deck->cards[deck->n_cards-1] = c;
 }
 
 
@@ -113,7 +113,7 @@ card_t * add_empty_card(deck_t * deck) {
   empty.value = 0;
   empty.suit = 0;
   add_card_to(deck, empty);
-  return &empty;
+  return deck->cards[deck->n_cards-1];
 }
 
 
@@ -150,13 +150,13 @@ deck_t * build_remaining_deck(deck_t ** hands, size_t n_hands) {
   card_t exclusionCard;
   for (size_t i = 0; i < n_hands; i++) { //iterate through each hand (n_hands)
     for (size_t j = 0; j < hands[i]->n_cards; j++) { //iterate through each card in a hand
-      exclusionCard = hands[i]->cards[j];
+      exclusionCard = *(hands[i]->cards[j]);
       if (deck_contains(exclusionDeck, exclusionCard) == 0) {
         add_card_to(exclusionDeck, exclusionCard); //add NEW cards found in hands to exclusion deck
       }
     }
   }
-  remainingDeck = make_deck_exclude(exclusionDeck);
+  deck_t * remainingDeck = make_deck_exclude(exclusionDeck);
   free_deck(exclusionDeck);
   return remainingDeck;
 }
@@ -169,7 +169,7 @@ it should free all the memory allocated by make_excluded_deck. Once you have
 written it, add calls to free_deck anywhere you need to to avoid memory leaks.*/
 void free_deck(deck_t * deck) {
   for (size_t i = 0; i < deck->n_cards; i++) {
-    free(*deck->cards[i]); //Free each card_t
+    free(deck->cards[i]); //Free each card_t
   }
   free(deck->cards); //Free the array of card_t*
   free(deck); //Free the deck_t
