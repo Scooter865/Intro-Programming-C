@@ -7,6 +7,8 @@
 
 int main(void) {
   deck_t * hand1 = malloc(sizeof(deck_t));
+  hand1->cards = NULL;
+  hand1->n_cards = 0;
   char * cardStr = NULL;
   size_t lnsz = 0;
   card_t curCard;
