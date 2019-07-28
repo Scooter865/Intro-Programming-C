@@ -99,6 +99,9 @@ reallocing the array of cards in that deck). Assuming that deck
 is already alloc'd because this function doesn't return anything*/
 void add_card_to(deck_t * deck, card_t c) {
   deck->n_cards++;
+  if (deck->n_cards == 1) {
+    deck->cards = malloc(sizeof(card_t*));
+  }
   deck->cards = realloc(deck->cards, deck->n_cards * sizeof(card_t*)); //allocate space for the new card pointer
   deck->cards[deck->n_cards-1] = malloc(sizeof(card_t)); //allocate space for the card
   *deck->cards[deck->n_cards-1] = c;
