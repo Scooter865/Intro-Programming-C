@@ -51,7 +51,6 @@ Then it will draw Kh for ?1, and so on. Think about a case where this
 function would need to print an error message.*/
 void future_cards_from_deck(deck_t * deck, future_cards_t * fc) {
 	//Corner/error cases:
-		//Empty deck/ran out of cards
 		//Blank/empty index in fc
 
 	card_t topCard;
@@ -59,6 +58,7 @@ void future_cards_from_deck(deck_t * deck, future_cards_t * fc) {
 	for (size_t i = 0; i < fc->n_decks; i++) { //Iterate through n_decks
 		topCard.value = deck->cards[i]->value; //Draw a card from deck
 		topCard.suit = deck->cards[i]->suit;
+		assert_card_valid(topCard); //Covers empty deck/ran out of cards
 
 		for (size_t j = 0; j < fc->decks[i].n_cards; j++) { //iterate through each unknown card in current deck
 			fc->decks[i]->cards[j]->value = topCard.value; //Assign card values (not pointer values)
