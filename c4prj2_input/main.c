@@ -42,6 +42,10 @@ int main(int argc, char ** argv) {
   }
   free(fc);
 
-
+  if (fclose(f) != 0) {
+    fprintf(stderr, "problem closing input file\n");
+    exit(EXIT_FAILURE);
+  }
+  
   return EXIT_SUCCESS;
 }

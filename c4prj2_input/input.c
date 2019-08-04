@@ -63,9 +63,5 @@ deck_t ** read_input(FILE * f, size_t * n_hands, future_cards_t * fc) {
   }
   free(handStr);
 
-  if (fclose(f) != 0) {
-    fprintf(stderr, "problem closing input file\n");
-    exit(EXIT_FAILURE);
-  }
   return hands;
 }
