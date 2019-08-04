@@ -21,17 +21,18 @@ and just having empty decks for the indicies that have not had
 add_future_card called on them yet.*/
 void add_future_card(future_cards_t * fc, size_t index, card_t * ptr) {
   if (index > fc->n_decks) { //Only realloc if index is the larget value seen so far
+    fc->n_decks = index;
     fc->decks = realloc(fc->decks, index * sizeof(deck_t)); 
     fc->decks[index].n_cards = 0;
-    fc->decks[index].cards = NULL;
+    fc->decks[index]->cards = NULL;
     //fc->decks[index].cards = malloc(sizeof(card_t*));
     //fc->decks[index].cards[fc->decks[index].n_cards] = ptr;
   }
   else {
     //Add new unknown pointer to fc
     fc->decks[index].n_cards++;
-    fc->decks[index].cards = realloc(fc->decks[index].cards, fc->decks[index].n_cards * sizeof(card_t*));
-    fc->decks[index].cards[fc->decks[index].n_cards] = ptr;
+    fc->decks[index]->cards = realloc(fc->decks[index]->cards, fc->decks[index].n_cards * sizeof(card_t*));
+    fc->decks[index]->cards[fc->decks[index].n_cards] = ptr;
   }
 }
 
