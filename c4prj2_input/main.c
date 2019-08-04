@@ -9,7 +9,7 @@
 
 int main(int argc, char ** argv) {
   FILE * f = fopen(argv[1], "r");
-  size_t n_hands = atoi(argv[2]);
+  size_t n_hands = 50;
   
   future_cards_t * fc = malloc(sizeof(future_cards_t));
   fc->n_decks = 0;
