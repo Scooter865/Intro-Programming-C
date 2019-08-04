@@ -32,5 +32,15 @@ int main(int argc, char ** argv) {
     print_hand(hands[i]);
   }
 
+  free_deck(deck);
+  for (size_t i = 0; i < n_hands; i++) {
+    free_deck(hands[i]);
+  }
+  for (size_t i = 0; i < fc->n_decks; i++) {
+    free_deck(&fc[i]);
+  }
+  free(fc);
+
+
   return EXIT_SUCCESS;
 }

@@ -30,7 +30,7 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc){
       add_future_card(fc, unkIdx, futureCardPtr);
 
       do {
-	i++;
+	    i++;
       } while (isdigit(str[i])); //move past ? index
     }
   }
@@ -61,6 +61,8 @@ deck_t ** read_input(FILE * f, size_t * n_hands, future_cards_t * fc) {
     hands[handNo] = hand_from_string(handStr, fc); //Call hand_from_string to add that line to hands array
     handNo++;
   }
+  free(handStr);
+
   if (fclose(f) != 0) {
     fprintf(stderr, "problem closing input file\n");
     exit(EXIT_FAILURE);
