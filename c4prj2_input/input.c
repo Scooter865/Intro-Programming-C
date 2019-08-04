@@ -24,12 +24,8 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc){
       add_card_to(hand, cardToAdd);
     }
     else if (str[i] == '?') { //Call add_empty_card for any ? encountered
-      unkIdx = atoi(str[i+1]); //read the number after the ? to determine the unkIdx
-      /*numLen = i + 1;
-	while (isdigit(str[numLen])) {
-	numLen++;
-	}
-	numStr = strndup(str[i+1], numLen);*/ //Don't think this is necessary
+      unkIdx = atoi(&str[i+1]); //read the number after the ? to determine the unkIdx
+
       futureCardPtr = add_empty_card(hand);
       add_future_card(fc, unkIdx, futureCardPtr);
     }
