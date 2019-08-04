@@ -36,8 +36,9 @@ int main(int argc, char ** argv) {
   for (size_t i = 0; i < n_hands; i++) {
     free_deck(hands[i]);
   }
+  free(hands);
   for (size_t i = 0; i < fc->n_decks; i++) {
-    free_deck(&fc[i]);
+    free_deck(&fc->decks[i]);
   }
   free(fc);
 
