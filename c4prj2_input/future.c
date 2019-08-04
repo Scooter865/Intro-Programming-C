@@ -20,20 +20,20 @@ reallocing its array to be large enough to handle the specified index,
 and just having empty decks for the indicies that have not had
 add_future_card called on them yet.*/
 void add_future_card(future_cards_t * fc, size_t index, card_t * ptr) {
-	//Allocate and initialize index * sizeof(deck_t) in fc.
-	if (index > fc->n_decks) { //Only realloc if index is the larget value seen so far
-		fc->decks = realloc(fc->decks, index * sizeof(deck_t)); 
-		fc->decks[index].cards = NULL;
-		fc->decks[index].n_cards = 0;
-	}
-	size_t idxCards = fc->decks[index].n_cards;
-
-	//Allocate space for new placeholder pointer
-	idxCards++;
-	fc->decks[index].cards = realloc(fc->decks[index].cards, idxCards * sizeof(card_t*));
-
-	//Set new element of cards = ptr
-	fc->decks[index].cards[idxCards] = ptr;
+  //Allocate and initialize index * sizeof(deck_t) in fc.
+  if (index > fc->n_decks) { //Only realloc if index is the larget value seen so far
+    fc->decks = realloc(fc->decks, index * sizeof(deck_t)); 
+    fc->decks[index].cards = NULL;
+    fc->decks[index].n_cards = 0;
+  }
+  size_t idxCards = fc->decks[index].n_cards;
+  
+  //Allocate space for new placeholder pointer
+  idxCards++;
+  fc->decks[index].cards = realloc(fc->decks[index].cards, idxCards * sizeof(card_t*));
+  
+  //Set new element of cards = ptr
+  fc->decks[index].cards[idxCards] = ptr;
 }
 
 
@@ -50,20 +50,20 @@ then this function will draw As for ?0, and fill in the two placeholders for
 Then it will draw Kh for ?1, and so on. Think about a case where this
 function would need to print an error message.*/
 void future_cards_from_deck(deck_t * deck, future_cards_t * fc) {
-	if (deck->n_cards < fc->n_decks) {
-		printf("More unknowns than cards\n");
-		exit(EXIT_FAILURE);
-	}
-	
-	card_t topCard;
-
-	for (size_t i = 0; i < fc->n_decks; i++) { //Iterate through n_decks
-		topCard.value = deck->cards[i]->value; //Draw a card from deck
-		topCard.suit = deck->cards[i]->suit;
-
-		for (size_t j = 0; j < fc->decks[i].n_cards; j++) { //iterate through each unknown card in current deck
-			fc->decks[i]->cards[j]->value = topCard.value; //Assign card values (not pointer values)
-			fc->decks[i]->cards[j]->suit = topCard.suit;
-		}
-	}
+  if (deck->n_cards < fc->n_decks) {
+    printf("More unknowns than cards\n");
+    exit(EXIT_FAILURE);
+  }
+  
+  card_t topCard;
+  
+  for (size_t i = 0; i < fc->n_decks; i++) { //Iterate through n_decks
+    topCard.value = deck->cards[i]->value; //Draw a card from deck
+    topCard.suit = deck->cards[i]->suit;
+    
+    for (size_t j = 0; j < fc->decks[i].n_cards; j++) { //iterate through each unknown card in current deck
+      fc->decks[i].cards[j]->value = topCard.value; //Assign card values (not pointer values)
+      fc->decks[i].cards[j]->suit = topCard.suit;
+    }
+  }
 }
