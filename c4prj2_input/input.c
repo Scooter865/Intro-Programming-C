@@ -16,18 +16,22 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc){
   card_t cardToAdd;
   int unkIdx;
   card_t * futureCardPtr = NULL;
-  //size_t numLen = 0;
-  //char * numStr = NULL;
+  
   for (size_t i = 0; i < strlen(str); i++) { //Iterate through each character in the string
-    if (isupper(str[i]) || isdigit(str[i])) { //Call card_from_letters with the char and the next one if it's a capital letter or number
+    //Call card_from_letters with the char and the next one if it's a capital letter or number
+    if (isupper(str[i]) || isdigit(str[i])) {
       cardToAdd = card_from_letters(str[i], str[i+1]);
       add_card_to(hand, cardToAdd);
     }
     else if (str[i] == '?') { //Call add_empty_card for any ? encountered
       unkIdx = atoi(&str[i+1]); //read the number after the ? to determine the unkIdx
-
+      
       futureCardPtr = add_empty_card(hand);
       add_future_card(fc, unkIdx, futureCardPtr);
+
+      do {
+	i++;
+      } while (isdigit(str[i])); //move past ? index
     }
   }
   return hand;
