@@ -20,20 +20,19 @@ reallocing its array to be large enough to handle the specified index,
 and just having empty decks for the indicies that have not had
 add_future_card called on them yet.*/
 void add_future_card(future_cards_t * fc, size_t index, card_t * ptr) {
-  //Allocate and initialize index * sizeof(deck_t) in fc.
   if (index > fc->n_decks) { //Only realloc if index is the larget value seen so far
     fc->decks = realloc(fc->decks, index * sizeof(deck_t)); 
-    fc->decks[index].cards = NULL;
     fc->decks[index].n_cards = 0;
+    fc->decks[index].cards = NULL;
+    //fc->decks[index].cards = malloc(sizeof(card_t*));
+    //fc->decks[index].cards[fc->decks[index].n_cards] = ptr;
   }
-  size_t idxCards = fc->decks[index].n_cards;
-  
-  //Allocate space for new placeholder pointer
-  idxCards++;
-  fc->decks[index].cards = realloc(fc->decks[index].cards, idxCards * sizeof(card_t*));
-  
-  //Set new element of cards = ptr
-  fc->decks[index].cards[idxCards] = ptr;
+  else {
+    //Add new unknown pointer to fc
+    fc->decks[index].n_cards++;
+    fc->decks[index].cards = realloc(fc->decks[index].cards, fc->decks[index].n_cards * sizeof(card_t*));
+    fc->decks[index].cards[fc->decks[index].n_cards] = ptr;
+  }
 }
 
 
