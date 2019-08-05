@@ -22,7 +22,7 @@ add_future_card called on them yet.*/
 void add_future_card(future_cards_t * fc, size_t index, card_t * ptr) {
   if (index >= fc->n_decks) { //Only realloc if you need to
     fc->n_decks = index+1;
-    fc->decks = realloc(fc->decks, (index+1) * sizeof(deck_t)); 
+    fc->decks = realloc(fc->decks, (index+1) * sizeof(deck_t));
     fc->decks[index].n_cards = 0;
     fc->decks[index].cards = NULL;
   }
