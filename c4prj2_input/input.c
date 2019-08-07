@@ -55,7 +55,7 @@ deck_t ** read_input(FILE * f, size_t * n_hands, future_cards_t * fc) {
   while (getline(&handStr, &handStrSz, f) > 0) { //Read a line with getline
     *n_hands = *n_hands + 1;
     if (strlen(handStr) < 15) { //make sure it has at least 5 cards
-      //fprintf(stderr, "I think there's a problem with input line %zu\n", *n_hands);
+      fprintf(stderr, "I think there's a problem with input line %zu\n", *n_hands);
       exit(EXIT_FAILURE);
     }
 
