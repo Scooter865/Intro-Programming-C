@@ -85,7 +85,7 @@ void assert_full_deck(deck_t * d) {
       int contains = deck_contains(d, card);
       //print any missing card and say the deck is not full
       if (contains == 0) {
-	//printf("deck is missing %c%c\n",value_letter(card), suit_letter(card));
+	printf("deck is missing %c%c\n",value_letter(card), suit_letter(card));
 	fulldeck = 0;
       }
     }

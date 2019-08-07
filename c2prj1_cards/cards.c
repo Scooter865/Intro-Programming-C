@@ -106,7 +106,7 @@ card_t card_from_letters(char value_let, char suit_let) {
   }
   //error if it's not a valid card
   else {
-    printf("invalid value\n");
+    //printf("invalid value\n");
     exit(EXIT_FAILURE);
   }
   //switch case to assign suit

@@ -55,11 +55,11 @@ deck_t ** read_input(FILE * f, size_t * n_hands, future_cards_t * fc) {
   while (getline(&handStr, &handStrSz, f) > 0) { //Read a line with getline
     *n_hands = *n_hands + 1;
     if (strlen(handStr) < 15) { //make sure it has at least 5 cards
-      fprintf(stderr, "I think there's a problem with input line %zu\n", *n_hands);
+      //fprintf(stderr, "I think there's a problem with input line %zu\n", *n_hands);
       exit(EXIT_FAILURE);
     }
 
-    hands = realloc(hands, *n_hands * sizeof(deck_t*)); //don't think we need this with n_hands
+    hands = realloc(hands, *n_hands * sizeof(deck_t*));
     hands[*n_hands - 1] = hand_from_string(handStr, fc); //Call hand_from_string to add that line to hands arrays
   }
   free(handStr);
