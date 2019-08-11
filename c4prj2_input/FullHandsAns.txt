@@ -1,0 +1,12 @@
+Here are the input hands:
+As Qd Qh 9s 7c 5d 5h
+Kh Kd 9s 7c 5d 5h 2h
+As Qd 9h 9d 9s 7c 7s 4h 4s 2d 2h
+2s Ac 8d Jh 5d
+Here's the remaining deck:
+3s 5s 6s 8s 0s Js Qs Ks 3h 6h 7h 8h 0h Ah 3d 4d 6d 7d 0d Jd Ad 2c 3c 4c 5c 6c 8c 9c 0c Jc Qc Kc
+Here are the filled in hands:
+As Qd Qh 9s 7c 5d 5h
+Kh Kd 9s 7c 5d 5h 2h
+As Qd 9h 9d 9s 7c 7s 4h 4s 2d 2h
+2s Ac 8d Jh 5d
