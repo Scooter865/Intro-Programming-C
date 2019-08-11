@@ -11,7 +11,7 @@ void print_hand(deck_t * hand){
      printf(" ");
     }
   }
-  printf("\n");
+  //printf("\n");
 }
 
 
