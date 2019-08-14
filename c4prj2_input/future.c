@@ -24,7 +24,7 @@ void add_future_card(future_cards_t * fc, size_t index, card_t * ptr) {
   //Initialize between new idx and 0 if there's nothing between them (n_decks = 0 in main so don't worry about it?)
   if (index >= fc->n_decks) {
     fc->decks = realloc(fc->decks, (index+1) * sizeof(deck_t));
-    for (size_t i = n_decks; i <= index; i++) {
+    for (size_t i = fc->n_decks; i <= index; i++) {
       fc->decks[i].n_cards = 0;
       fc->decks[i].cards = NULL;
     }
