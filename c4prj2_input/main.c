@@ -19,6 +19,7 @@ int main(int argc, char ** argv) {
   printf("Here are the input hands:\n");
   for (size_t i = 0; i < n_hands; i++) {
     print_hand(hands[i]);
+    printf("\n");
   }
 
   deck_t * deck = build_remaining_deck(hands, n_hands);
@@ -30,6 +31,7 @@ int main(int argc, char ** argv) {
   printf("Here are the filled in hands:\n");
   for (size_t i = 0; i < n_hands; i++) {
     print_hand(hands[i]);
+    printf("\n");
   }
 
   free_deck(deck);
@@ -38,8 +40,9 @@ int main(int argc, char ** argv) {
   }
   free(hands);
   for (size_t i = 0; i < fc->n_decks; i++) {
-    free_deck(&fc->decks[i]);
+    free(fc->decks[i].cards);
   }
+  free(fc->decks);
   free(fc);
 
   if (fclose(f) != 0) {
