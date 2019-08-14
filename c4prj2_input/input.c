@@ -16,7 +16,26 @@ deck_t * hand_from_string(const char * str, future_cards_t * fc){
   card_t cardToAdd;
   int unkIdx;
   card_t * futureCardPtr = NULL;
+  int maxIdx = -1;
   
+  //First find the highest ? index used so all unknowns can be initialized at once
+  for (size_t i = 0; i < strlen(str); i++) {
+    if (str[i] == '?') {
+      unkIdx = atoi(&str[i+1]);
+      if (unkIdx > maxIdx) {
+        maxIdx = unkIdx;
+      }
+    }
+  }
+  if (maxIdx > -1) { //This means there are unknowns
+    fc->n_decks = maxIdx+1;
+    fc->decks = realloc(fc->decks, (maxIdx+1) * sizeof(deck_t));
+    for (size_t i = 0; i < fc->n_decks; i++) {
+      fc->decks[i].n_cards = 0;
+      fc->decks[i].cards = NULL;
+    }
+  }
+
   for (size_t i = 0; i < strlen(str); i++) { //Iterate through each character in the string
     //Call card_from_letters with the char and the next one if it's a capital letter or number
     if (isupper(str[i]) || isdigit(str[i])) {
