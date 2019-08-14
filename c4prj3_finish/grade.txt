@@ -1,0 +1,179 @@
+Grading at Wed Aug 14 15:16:51 UTC 2019
+Running 'make clean' to do a clean build of your project
+rm -rf *.o poker *~
+Running 'make poker OTHERFLAGS=-O3' to build your project
+gcc -Wall -Werror -ggdb3 -std=gnu99 -pedantic -O3   -c -o cards.o cards.c
+gcc -Wall -Werror -ggdb3 -std=gnu99 -pedantic -O3   -c -o deck.o deck.c
+gcc -Wall -Werror -ggdb3 -std=gnu99 -pedantic -O3   -c -o eval.o eval.c
+gcc -Wall -Werror -ggdb3 -std=gnu99 -pedantic -O3   -c -o future.o future.c
+gcc -Wall -Werror -ggdb3 -std=gnu99 -pedantic -O3   -c -o input.o input.c
+gcc -Wall -Werror -ggdb3 -std=gnu99 -pedantic -O3   -c -o main.o main.c
+gcc -o poker -Wall -Werror -ggdb3 -std=gnu99 -pedantic -O3 cards.o deck.o eval.o future.o input.o main.o
+ - Starting with some Texas Hold'em hands
+Running a simulation with 20000 draws for 2 hands...
+    Hand 0 was close enough to our answer
+    Hand 1 was close enough to our answer
+    Test case passed!    
+Running a simulation with 25000 draws for 3 hands...
+Valgrind reported errors:
+==540== Memcheck, a memory error detector
+==540== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==540== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==540== Command: ./poker inp.txt 25000
+==540== Parent PID: 539
+==540== 
+==540== Invalid read of size 8
+==540==    at 0x400BA4: main (main.c:63)
+==540==  Address 0x5206488 is 0 bytes after a block of size 24 alloc'd
+==540==    at 0x4C2FD5F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==540==    by 0x403545: read_input (input.c:62)
+==540==    by 0x400AA8: main (main.c:37)
+==540== 
+==540== Invalid read of size 8
+==540==    at 0x4031B6: compare_hands (eval.c:232)
+==540==    by 0x400BAC: main (main.c:63)
+==540==  Address 0x8 is not stack'd, malloc'd or (recently) free'd
+==540== 
+==540== 
+==540== Process terminating with default action of signal 11 (SIGSEGV): dumping core
+==540==  Access not within mapped region at address 0x8
+==540==    at 0x4031B6: compare_hands (eval.c:232)
+==540==    by 0x400BAC: main (main.c:63)
+==540==  If you believe this happened as a result of a stack
+==540==  overflow in your program's main thread (unlikely but
+==540==  possible), you can try to increase the size of the
+==540==  main thread stack using the --main-stacksize= flag.
+==540==  The main thread stack size used in this run was 8388608.
+==540== 
+==540== HEAP SUMMARY:
+==540==     in use at exit: 1,928 bytes in 84 blocks
+==540==   total heap usage: 1,707 allocs, 1,623 frees, 62,352 bytes allocated
+==540== 
+==540== LEAK SUMMARY:
+==540==    definitely lost: 40 bytes in 2 blocks
+==540==    indirectly lost: 584 bytes in 33 blocks
+==540==      possibly lost: 0 bytes in 0 blocks
+==540==    still reachable: 1,304 bytes in 49 blocks
+==540==         suppressed: 0 bytes in 0 blocks
+==540== Rerun with --leak-check=full to see details of leaked memory
+==540== 
+==540== For counts of detected and suppressed errors, rerun with: -v
+==540== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+Running a simulation with 25000 draws for 3 hands...
+Valgrind reported errors:
+==545== Memcheck, a memory error detector
+==545== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==545== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==545== Command: ./poker inp2.txt 25000
+==545== Parent PID: 544
+==545== 
+==545== Invalid read of size 8
+==545==    at 0x400BA4: main (main.c:63)
+==545==  Address 0x5206488 is 0 bytes after a block of size 24 alloc'd
+==545==    at 0x4C2FD5F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==545==    by 0x403545: read_input (input.c:62)
+==545==    by 0x400AA8: main (main.c:37)
+==545== 
+==545== Invalid read of size 8
+==545==    at 0x4031B6: compare_hands (eval.c:232)
+==545==    by 0x400BAC: main (main.c:63)
+==545==  Address 0x8 is not stack'd, malloc'd or (recently) free'd
+==545== 
+==545== 
+==545== Process terminating with default action of signal 11 (SIGSEGV): dumping core
+==545==  Access not within mapped region at address 0x8
+==545==    at 0x4031B6: compare_hands (eval.c:232)
+==545==    by 0x400BAC: main (main.c:63)
+==545==  If you believe this happened as a result of a stack
+==545==  overflow in your program's main thread (unlikely but
+==545==  possible), you can try to increase the size of the
+==545==  main thread stack using the --main-stacksize= flag.
+==545==  The main thread stack size used in this run was 8388608.
+==545== 
+==545== HEAP SUMMARY:
+==545==     in use at exit: 1,928 bytes in 84 blocks
+==545==   total heap usage: 4,195 allocs, 4,111 frees, 132,016 bytes allocated
+==545== 
+==545== LEAK SUMMARY:
+==545==    definitely lost: 40 bytes in 2 blocks
+==545==    indirectly lost: 584 bytes in 33 blocks
+==545==      possibly lost: 0 bytes in 0 blocks
+==545==    still reachable: 1,304 bytes in 49 blocks
+==545==         suppressed: 0 bytes in 0 blocks
+==545== Rerun with --leak-check=full to see details of leaked memory
+==545== 
+==545== For counts of detected and suppressed errors, rerun with: -v
+==545== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+Running a simulation with 25000 draws for 2 hands...
+    Hand 0 was close enough to our answer
+    Hand 1 was close enough to our answer
+    Test case passed!    
+Running a simulation with 80000 draws for 4 hands...
+    Hand 0 was close enough to our answer
+    Hand 1 was close enough to our answer
+    Hand 2 was close enough to our answer
+    Hand 3 was close enough to our answer
+    Test case passed!    
+Running a simulation with 30000 draws for 2 hands...
+    Hand 0 was close enough to our answer
+    Hand 1 was close enough to our answer
+    Test case passed!    
+ - Next, few Seven Card Stud hands
+Running a simulation with 30000 draws for 2 hands...
+    Hand 0 was close enough to our answer
+    Hand 1 was close enough to our answer
+    Test case passed!    
+Running a simulation with 40000 draws for 3 hands...
+Could not find the win percent in your output
+Could not find the win percent in your output
+Could not find the win percent in your output
+You dont seem to have the right total draws.
+Yours sum to 0 but I expected 40000
+ - Then one from a completely made up poker variant
+Running a simulation with 100000 draws for 6 hands...
+Valgrind reported errors:
+==849== Memcheck, a memory error detector
+==849== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==849== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==849== Command: ./poker whacky.txt 100000
+==849== Parent PID: 848
+==849== 
+==849== Invalid read of size 8
+==849==    at 0x400BA4: main (main.c:63)
+==849==  Address 0x52077f0 is 0 bytes after a block of size 48 alloc'd
+==849==    at 0x4C2FD5F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==849==    by 0x403545: read_input (input.c:62)
+==849==    by 0x400AA8: main (main.c:37)
+==849== 
+==849== Invalid read of size 8
+==849==    at 0x4031B6: compare_hands (eval.c:232)
+==849==    by 0x400BAC: main (main.c:63)
+==849==  Address 0x8 is not stack'd, malloc'd or (recently) free'd
+==849== 
+==849== 
+==849== Process terminating with default action of signal 11 (SIGSEGV): dumping core
+==849==  Access not within mapped region at address 0x8
+==849==    at 0x4031B6: compare_hands (eval.c:232)
+==849==    by 0x400BAC: main (main.c:63)
+==849==  If you believe this happened as a result of a stack
+==849==  overflow in your program's main thread (unlikely but
+==849==  possible), you can try to increase the size of the
+==849==  main thread stack using the --main-stacksize= flag.
+==849==  The main thread stack size used in this run was 8388608.
+==849== 
+==849== HEAP SUMMARY:
+==849==     in use at exit: 2,152 bytes in 98 blocks
+==849==   total heap usage: 645 allocs, 547 frees, 29,512 bytes allocated
+==849== 
+==849== LEAK SUMMARY:
+==849==    definitely lost: 64 bytes in 2 blocks
+==849==    indirectly lost: 1,008 bytes in 61 blocks
+==849==      possibly lost: 0 bytes in 0 blocks
+==849==    still reachable: 1,080 bytes in 35 blocks
+==849==         suppressed: 0 bytes in 0 blocks
+==849== Rerun with --leak-check=full to see details of leaked memory
+==849== 
+==849== For counts of detected and suppressed errors, rerun with: -v
+==849== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+
+Overall Grade: F
