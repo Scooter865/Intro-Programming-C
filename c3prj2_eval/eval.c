@@ -179,7 +179,9 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
         }
         --suitedCard.value;
       }
-      flushChk = deck_contains(hand, suitedAce);
+      if (deck_contains(hand, suitedAce) == 0) {
+	flushChk = 0;
+      }
     }
   }
   
