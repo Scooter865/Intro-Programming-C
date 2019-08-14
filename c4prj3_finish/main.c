@@ -86,9 +86,9 @@ int main(int argc, char ** argv) {
   }
   free(hands);
   for (size_t i = 0; i < fc->n_decks; i++) {
-    free_deck(fc->decks[i].cards);
+    free(fc->decks[i].cards);
   }
-  free(fc->deck);
+  free(fc->decks);
   free(fc);
 
   return EXIT_SUCCESS;
