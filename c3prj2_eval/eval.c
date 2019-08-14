@@ -148,7 +148,7 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
   unsigned aceLow = 0;  //possible ace-low straight
   unsigned flushChk = 1;  //possible straight flush
   card_t suitedCard = {(*hand->cards[index]).value, fs};  //card to check against for straight-flush
-  card_t suitedAce = {VALUE_ACE, fs};
+  //card_t suitedAce = {VALUE_ACE, fs};
 
   unsigned cardsInRow = counterFcn(hand, index);  //count the number of cards in a row from index
 
@@ -179,7 +179,7 @@ int is_straight_at(deck_t * hand, size_t index, suit_t fs) {
         }
         --suitedCard.value;
       }
-      if (deck_contains(hand, suitedAce) == 0) {
+      if (hand->cards[index]->suit != fs) {
 	flushChk = 0;
       }
     }
