@@ -53,25 +53,33 @@ int main(int argc, char ** argv) {
 
   int compRes;
   size_t winnerIdx;
+  int tie;
 
   for (size_t i = 0; i < num_trials; i++) {
     shuffle(remainingDeck);
     future_cards_from_deck(remainingDeck, fc);
     winnerIdx = 0;
+    tie = 0;
 
     for (size_t j = 1; j < n_hands; j++) {
       compRes = compare_hands(hands[winnerIdx], hands[j]);
-	/*if (compRes > 0) {
-	  No action keep the winner index where it is
+      /*if (compRes > 0) {
+	  windex[winnerIdx]++;
 	  }*/
 	if (compRes == 0) {
-	  winnerIdx = n_hands;
+	  tie = 1;
 	}
 	else if (compRes < 0) {
 	  winnerIdx = j;
+	  tie = 0;
 	}
     }
-    windex[winnerIdx]++;
+    if (tie) {
+      windex[n_hands]++;
+    }
+    else {
+      windex[winnerIdx]++;
+    }
   }
   
   for (size_t i = 0; i < n_hands; i++) {
@@ -91,5 +99,9 @@ int main(int argc, char ** argv) {
   free(fc->decks);
   free(fc);
 
+  if (fclose(input) != 0) {
+    fprintf(stderr, "problem closing input file\n");
+    exit(EXIT_FAILURE);
+  }
   return EXIT_SUCCESS;
 }
