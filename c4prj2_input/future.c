@@ -20,7 +20,17 @@ reallocing its array to be large enough to handle the specified index,
 and just having empty decks for the indicies that have not had
 add_future_card called on them yet.*/
 void add_future_card(future_cards_t * fc, size_t index, card_t * ptr) {
-//All deck_t initialization handled in hand_from_string
+  //When new highest index in found, initialize between it and n_decks before changing n_decks
+  //Initialize between new idx and 0 if there's nothing between them (n_decks = 0 in main so don't worry about it?)
+  if (index >= fc->n_decks) {
+    fc->decks = realloc(fc->decks, (index+1) * sizeof(deck_t));
+    for (size_t i = n_decks; i <= index; i++) {
+      fc->decks[i].n_cards = 0;
+      fc->decks[i].cards = NULL;
+    }
+    fc->n_decks = index+1;
+  }
+
   fc->decks[index].n_cards++;
   fc->decks[index].cards = realloc(fc->decks[index].cards, fc->decks[index].n_cards * sizeof(card_t*));
   fc->decks[index].cards[fc->decks[index].n_cards - 1] = ptr;
